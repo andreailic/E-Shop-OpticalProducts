@@ -1,0 +1,14 @@
+TRIGERI
+
+
+
+
+
+
+
+
+
+
+BAZA
+pass postgres
+port 5432

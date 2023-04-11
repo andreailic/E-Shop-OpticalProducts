@@ -1,0 +1,12 @@
+package model;
+
+public class Customer {
+
+	
+
+	public void setAddress(Object object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

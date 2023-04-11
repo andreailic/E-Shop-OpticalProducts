@@ -1,0 +1,10 @@
+package model;
+
+public class Kupac {
+
+	public void setAdresa(Address adresa) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

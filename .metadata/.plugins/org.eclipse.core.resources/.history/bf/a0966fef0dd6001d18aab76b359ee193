@@ -1,0 +1,15 @@
+package model;
+
+public class Product {
+
+	public void setCategory(Object object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setBrand(Brand brand) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
