@@ -1,0 +1,18 @@
+package root.repository;
+
+import java.util.Collection;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
+
+import root.model.Customer;
+@Repository
+public interface CustomerRepository extends JpaRepository<Customer, Integer>,PagingAndSortingRepository<Customer, Integer> {
+
+	Collection<Customer> findCustomerByNameIgnoreCase(String name);
+
+	Customer findByEmail(String email);
+
+	
+}
