@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @Repository
 public interface StaffRepository extends JpaRepository<Staff, Integer>, PagingAndSortingRepository <Staff, Integer> {
 
-	Collection<Staff> findStaffByNameIgnoreCase(String name);
+	Collection<Staff> findStaffByUserNameIgnoreCase(String name);
 
-	Staff findByEmail(String email);
+	Staff findByUserEmail(String email);
 }

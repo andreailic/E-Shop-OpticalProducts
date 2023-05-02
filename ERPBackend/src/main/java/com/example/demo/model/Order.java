@@ -4,17 +4,7 @@ import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -29,11 +19,12 @@ public class Order {
 	@Temporal(TemporalType.DATE)
 	private Date orderDate;
 	private String orderStatus;
+	@Column(name = "total_price")
 	private float orderPrice;
 	
 	// bi-directional many-to-one association to Brand
 			@ManyToOne(cascade = CascadeType.ALL)
-			@JoinColumn(name="User")
+			@JoinColumn(name="userId")
 			private User user;
 			
 		public Order() {

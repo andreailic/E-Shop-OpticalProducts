@@ -1,20 +1,8 @@
 package com.example.demo.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -22,27 +10,20 @@ import jakarta.persistence.Table;
 public class User {
 
 	@Id
-	@SequenceGenerator(name="USER_ID_GENERATOR", sequenceName="USER_SEQ", allocationSize = 1)
+	@SequenceGenerator(name="USER_ID_GENERATOR", sequenceName="USERS_SEQ", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USER_ID_GENERATOR")
 	private int userId;
 	private String name;
 	private String surname;
-	
-	private String email;
-	
 
+	private String email;
+	@Column(name = "user_name")
 	private String username;
 
 	private String password;
-	
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_role", 
-				joinColumns = @JoinColumn(name = "userId"),
-				inverseJoinColumns = @JoinColumn(name = "roleId"))
-	
-	
-	private Set<Role> role= new HashSet<>();
+
+	@Enumerated(EnumType.STRING)
+	private ERole role;
 	
 	
 	
@@ -52,7 +33,7 @@ public class User {
 
 
 	public User(int userId, String name, String surname, String email,  String user_name,
-			String password, Set<Role> role) {
+			String password, ERole role) {
 		super();
 		this.userId = userId;
 		this.name = name;
@@ -143,13 +124,12 @@ public class User {
 
 
 
-	public Set<Role> getRole() {
+	public ERole getRole() {
 		return role;
 	}
 
 
-	public void setRole(Set<Role> role) {
-		System.out.println("Role:" + role.size());
+	public void setRole(ERole role) {
 		this.role = role;
 	}
 	

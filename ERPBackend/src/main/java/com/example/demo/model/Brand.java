@@ -1,21 +1,15 @@
 package com.example.demo.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="Brand")
 public class Brand {
@@ -27,9 +21,9 @@ public class Brand {
 	@Column(name="brand_name")
 	private String brandName;
 	
-	@OneToMany(mappedBy="brand", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="brand", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@JsonIgnore
-	private List<Product> products;
+	private List<Product> products = new ArrayList<>();
 	
 	
 
@@ -59,11 +53,13 @@ public class Brand {
 	public void setBrandName(String brand_name) {
 		this.brandName = brand_name;
 	}
-	
+
+	@JsonIgnore
 	public List<Product> getProduct() {
 		return products;
 	}
 
+	@JsonIgnore
 	public void setProduct(List<Product> products) {
 		this.products = products;
 	}

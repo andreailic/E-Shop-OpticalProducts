@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -13,10 +14,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+import java.io.Serializable;
+
 @Entity
 @Table(name="Product")
-public class Product {
+public class Product implements Serializable {
 
 	
 	@Id
@@ -25,29 +27,25 @@ public class Product {
 	private int productId;
 	@Column(name="name")
 	private String name;
-	private String price;
+	private int price;
 	private String description;
-	private String lager;
-	
-	
-	// bi-directional many-to-one association to Brand
-		@ManyToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name="brandId")
-		private Brand brand;
-		
-		
-	//bi-directional many-to-one association to Category
-		@ManyToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name="categoryId")
-		private Category category;
-		
+	private int lager;
+
+	@ManyToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name="brand_id")
+	private Brand brand;
+
+	@ManyToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name="category_id")
+	private Category category;
+
 	
 	public Product() {
 		
 	}
 	
 	
-	public Product(int product_id, String product_name, String product_price, String description, String lager,
+	public Product(int product_id, String product_name, int product_price, String description, int lager,
 			Brand brand, Category category) {
 		super();
 		this.productId = product_id;
@@ -76,11 +74,11 @@ public class Product {
 		this.name = name;
 	}
 
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 
@@ -92,11 +90,11 @@ public class Product {
 		this.description = description;
 	}
 
-	public String getLager() {
+	public int getLager() {
 		return lager;
 	}
 
-	public void setLager(String lager) {
+	public void setLager(int lager) {
 		this.lager = lager;
 	}
 

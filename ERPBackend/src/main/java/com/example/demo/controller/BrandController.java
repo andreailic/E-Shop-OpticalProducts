@@ -55,8 +55,6 @@ import com.example.demo.repository.BrandRepository;
 			Brand brand = brandRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Brand not found with id: " + id));
 			brand.setBrandName(newBrand.getBrandName());
-			brand.setProduct(newBrand.getProduct());
-			
 			Brand updatedBrand = brandRepository.save(brand);
 			
 			return ResponseEntity.ok(updatedBrand);

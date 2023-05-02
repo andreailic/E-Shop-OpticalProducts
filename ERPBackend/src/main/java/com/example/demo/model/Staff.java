@@ -4,33 +4,37 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="Staff")
-public class Staff extends User{
-	
+public class Staff {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
 	private String position;
+
+	@OneToOne
+	@JoinColumn(name = "userId")
+	private User user;
 	
 	public Staff() {
-		
 	}
 	
 	public Staff(String position) {
-		super();
 		this.position = position;
 	}
 
 	public Staff(User user, String position) {
-		super(user);
 		this.position = position;
 	}
 
-	public Staff(User user, Set<Role> role, String position) {
-		super(user);
-		super.setRole(role);
+	public Staff(User user, ERole role, String position) {
+		this.user = user;
+		user.setRole(role);
 		this.position = position;
 	}
 
@@ -41,5 +45,20 @@ public class Staff extends User{
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }

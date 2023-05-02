@@ -1,27 +1,17 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="Category")
-public class Category implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class Category {
 	@Id
 	@SequenceGenerator(name="CATEGORY_ID_GENERATOR", sequenceName="CATEGORY_SEQ", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CATEGORY_ID_GENERATOR")
@@ -30,9 +20,9 @@ public class Category implements Serializable {
 	@Column(name="category_name")
 	private String categoryName;
 
-	@OneToMany(mappedBy="category", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
+	@OneToMany(mappedBy="category", cascade = {CascadeType.DETACH, CascadeType.REMOVE}, orphanRemoval = true)
 	@JsonIgnore
-	private List<Product> products;
+	private List<Product> products = new ArrayList<>();
 
 	public Category() {
 	}
@@ -73,11 +63,12 @@ public class Category implements Serializable {
 	}
 
 
+	@JsonIgnore
 	public List<Product> getProducts() {
 		return products;
 	}
 
-
+	@JsonIgnore
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}

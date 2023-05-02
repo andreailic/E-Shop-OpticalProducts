@@ -31,7 +31,8 @@ public class ProductController {
 	
 	  @GetMapping("/product")
 	    public Collection<Product> getAllProduct(){
-			return productRepository.findAll();}
+			return productRepository.findAll();
+	  }
 	  
 	  @GetMapping("/product/{id}")
 	    public Product getProduct(@PathVariable("id") Integer id) {

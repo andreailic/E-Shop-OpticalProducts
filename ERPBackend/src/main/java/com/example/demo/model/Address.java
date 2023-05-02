@@ -44,9 +44,9 @@ public Address() {
 		
 	}
 	
-	public Address(int address_id, String street, String country, String city, int zip, List<Customer> customers) {
+	public Address(int addressId, String street, String country, String city, int zip, List<Customer> customers) {
 		super();
-		this.addressId = address_id;
+		this.addressId = addressId;
 		this.street = street;
 		this.country = country;
 		this.city = city;
@@ -66,12 +66,12 @@ public Address() {
 
 	
 	
-	public int getId_address() {
+	public int getAddressId() {
 		return addressId;
 	}
 
-	public void setId_address(int id_address) {
-		this.addressId = id_address;
+	public void setAddressId(int addressId) {
+		this.addressId = addressId;
 	}
 
 	public String getStreet() {
@@ -81,7 +81,6 @@ public Address() {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-
 	
 	public String getCountry() {
 		return country;

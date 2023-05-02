@@ -3,17 +3,12 @@ package com.example.demo.controller;
 import java.util.Collection;
 import java.util.Optional;
 
+import com.example.demo.model.Customer;
+import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Staff;
@@ -40,6 +35,14 @@ public class StaffController {
 		         throw new ResourceNotFoundException("Ne postoji radnik sa id: " + id);
 		     }
 		 }
+	@PostMapping("/staff")
+	public ResponseEntity<Staff> postUser(@RequestBody Staff staff){
+		if (!staffRepository.existsById(staff.getId())) {
+			staffRepository.save(staff);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
+	}
 	 @PutMapping("/staff/{id}")
 	    public ResponseEntity<Staff> updateStaff(@PathVariable("id") int id, @RequestBody Staff newStaff) {		
 		 Staff staff = staffRepository.findById(id)

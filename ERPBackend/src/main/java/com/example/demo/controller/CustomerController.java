@@ -4,17 +4,12 @@ package com.example.demo.controller;
 import java.util.Collection;
 import java.util.Optional;
 
+import com.example.demo.model.User;
+import com.example.demo.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Customer;
@@ -26,9 +21,16 @@ import com.example.demo.repository.CustomerRepository;
 public class CustomerController {
     
     @Autowired
-    private CustomerRepository customerRepository;
-    
-    @GetMapping("/customer") 
+    private final CustomerRepository customerRepository;
+	private final AddressRepository addressRepository;
+
+	public CustomerController(CustomerRepository customerRepository,
+							  AddressRepository addressRepository) {
+		this.customerRepository = customerRepository;
+		this.addressRepository = addressRepository;
+	}
+
+	@GetMapping("/customer")
     public Collection<Customer> getAllCustomer(){
     	return customerRepository.findAll();
     }
@@ -42,6 +44,21 @@ public class CustomerController {
 	         throw new ResourceNotFoundException("Ne postoji kupac sa id: " + id);
 	     }
 	 }
+
+	@PostMapping("/customer")
+	public ResponseEntity<User> postUser(@RequestBody Customer customer){
+		var addressOpt = addressRepository.findById(customer.getAddress().getAddressId());
+		if (addressOpt.isEmpty()) {
+			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+		}
+
+		customer.setAddress(addressOpt.get());
+		if (!customerRepository.existsById(customer.getId())) {
+			customerRepository.save(customer);
+			return new ResponseEntity<User>(HttpStatus.OK);
+		}
+		return new ResponseEntity<User>(HttpStatus.CONFLICT);
+	}
     
     @PutMapping("/customer/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable("id") int id, @RequestBody Customer newCustomer) {		

@@ -10,9 +10,9 @@ import com.example.demo.model.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer>,PagingAndSortingRepository<Customer, Integer> {
 
-	Collection<Customer> findCustomerByNameIgnoreCase(String name);
+	Collection<Customer> findCustomerByUserNameIgnoreCase(String name);
 
-	Customer findByEmail(String email);
+	Customer findByUserEmail(String email);
 
 	
 }

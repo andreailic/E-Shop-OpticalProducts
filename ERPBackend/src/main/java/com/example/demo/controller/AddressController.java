@@ -53,7 +53,7 @@ public class AddressController {
     
     @PostMapping("/address")
 	public ResponseEntity<Address> createAddress(@RequestBody Address address) {
-		if(!addressRepository.existsById(address.getId_address())) {
+		if(!addressRepository.existsById(address.getAddressId())) {
 			addressRepository.save(address);
 			return new ResponseEntity<Address>(HttpStatus.OK);
 		}
