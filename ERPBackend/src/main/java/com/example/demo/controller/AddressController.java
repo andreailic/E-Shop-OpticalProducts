@@ -4,6 +4,10 @@ package com.example.demo.controller;
 import java.util.Collection;
 import java.util.Optional;
 
+import com.example.demo.utils.SortingPaginationUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,6 +25,7 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Address;
 import com.example.demo.repository.AddressRepository;
 
+
 @CrossOrigin
 @RestController
 @RequestMapping("/address")
@@ -32,8 +37,13 @@ public class AddressController {
 	}
 
 	@GetMapping("/address")
-    public Collection<Address> getAllAddress(){
-		return addressRepository.findAll();}
+    public Page<Address> getAllAddress(
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size,
+			@RequestParam(defaultValue = "") String[] sort
+	){
+		var pageable = PageRequest.of(page, size, Sort.by(SortingPaginationUtils.parseSortParameters(sort)));
+		return addressRepository.findAll(pageable);}
     
 
     @GetMapping("/address/{id}")

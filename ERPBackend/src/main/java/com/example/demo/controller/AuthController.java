@@ -38,18 +38,18 @@ public class AuthController {
 
     @PostMapping("/auth/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        var optUser = userRepository.findUserByEmail(request.getEmail());
+        var optUser = userRepository.findUserByUsername(request.getUsername());
         if(optUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getUsername(),
                         request.getPassword()
                 )
         );
-        var user = userRepository.findUserByEmail(request.getEmail())
+        var user = userRepository.findUserByUsername(request.getUsername())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
