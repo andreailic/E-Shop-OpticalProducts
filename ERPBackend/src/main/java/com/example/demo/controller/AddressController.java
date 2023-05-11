@@ -26,7 +26,7 @@ import com.example.demo.model.Address;
 import com.example.demo.repository.AddressRepository;
 
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/address")
 public class AddressController {
@@ -37,13 +37,8 @@ public class AddressController {
 	}
 
 	@GetMapping("/address")
-    public Page<Address> getAllAddress(
-			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size,
-			@RequestParam(defaultValue = "") String[] sort
-	){
-		var pageable = PageRequest.of(page, size, Sort.by(SortingPaginationUtils.parseSortParameters(sort)));
-		return addressRepository.findAll(pageable);}
+    public Collection<Address> getAllAddress(){
+		return addressRepository.findAll();}
     
 
     @GetMapping("/address/{id}")
