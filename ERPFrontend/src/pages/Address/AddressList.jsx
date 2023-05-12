@@ -1,31 +1,36 @@
 import { useEffect, useMemo, useState } from "react"
 import { Link } from "react-router-dom";
-import brandService from "../../services/brand.service";
 import FilterComponent from "../../components/Filter/FilterComponent";
 import DataTable from "react-data-table-component";
+import addressService from "../../services/address.service";
 
-export default function BrandList() {
+export default function AddressList() {
 
     //Const 
     const columns = [
         {
             name: 'Id',
-            selector: row => row.brandId,
+            selector: row => row.addressId,
             sortable: true,
         },
         {
-            name: 'Name',
-            selector: row => row.brandName,
+            name: 'Street',
+            selector: row => row.street,
             sortable: true,
         },
         {
-            cell:(row) => <Link className="btn btn-warning" to={"/brands/edit/" + row.brandId}>Edit</Link>,
+            name: 'Country',
+            selector: row => row.country,
+            sortable: true,
+        },
+        {
+            cell:(row) => <Link className="btn btn-warning" to={"/address/edit/" + row.addressId}>Edit</Link>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
         {
-            cell:(row) => <button className="btn btn-danger" onClick={() => deleteRecord(row.brandId)} id={row.brandId}>Delete</button>,
+            cell:(row) => <button className="btn btn-danger" onClick={() => deleteRecord(row.addressId)} id={row.addressId}>Delete</button>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -38,7 +43,7 @@ export default function BrandList() {
     const [filteredData, setFilteredData] = useState([]);	
 
     useEffect(() => {
-       brandService.getAll().then(response => {
+       addressService.getAll().then(response => {
         console.log(response.data)
         setData(response.data);
         setFilteredData(response.data);
@@ -46,7 +51,8 @@ export default function BrandList() {
     }, []);
 
     useEffect(() => {
-        setFilteredData(data.filter(item => item.brandName.toLowerCase().includes(filterText.toLowerCase())));
+        setFilteredData(data.filter(item => item.street.toLowerCase().includes(filterText.toLowerCase())
+        || item.country.toLowerCase().includes(filterText.toLowerCase())));
       }, [filterText]);
 
     const searchMemo = useMemo(() => {
@@ -62,9 +68,9 @@ export default function BrandList() {
     }, [filterText]);
 
     function deleteRecord(id) {
-        brandService.delete(id).then(response => {
-            const newData = data.filter(x => x.brandId !== id);
-            const newFilteredData = filteredData.filter(x => x.brandId !== id);
+        addressService.delete(id).then(response => {
+            const newData = data.filter(x => x.addressId !== id);
+            const newFilteredData = filteredData.filter(x => x.addressId !== id);
             setData(newData);
             setFilteredData(newFilteredData);
         }).catch(err => {
@@ -75,12 +81,12 @@ export default function BrandList() {
     return (
         <>
             <div>
-                <Link to="/brands/add" className="btn btn-success">New brand</Link>
+                <Link to="/address/add" className="btn btn-success">New address</Link>
             </div>
 
             <div className="col-md-12">
             <DataTable
-                    title="Brands List"
+                    title="Address List"
                     columns={columns}
                     data={filteredData}
                     pagination

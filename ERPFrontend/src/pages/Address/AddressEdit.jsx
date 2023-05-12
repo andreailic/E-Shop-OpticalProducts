@@ -1,20 +1,23 @@
 import { useEffect, useRef, useState } from "react"
-import brandService from "../../services/brand.service";
 import { useParams } from "react-router-dom";
+import addressService from "../../services/address.service";
 
-export default function EditBrand() {
+export default function AddressEdit() {
 
-
-    const nameRef = useRef(null);
+    const streetRef = useRef(null);
+    const cityRef = useRef(null);
+    const stateRef = useRef(null);
 
     const [error, setError] = useState(false);
 
     const {id} = useParams();
 
     useEffect(() => {
-        brandService.get(id)
+        addressService.get(id)
             .then(response => {
-                nameRef.current.value = response.data.brandName;
+                streetRef.current.value = response.data.street;
+                cityRef.current.value = response.data.city;
+                stateRef.current.value = response.data.country;
             })
             .catch(err => {
                 console.log(err);
@@ -23,15 +26,19 @@ export default function EditBrand() {
 
     function save() {
         
-        const name = nameRef.current.value;
+        const street = streetRef.current.value;
+        const city = cityRef.current.value;
+        const country = stateRef.current.value;
         
-        if (!name) {
+        if (!street || !city || !country) {
             setError(true);
             return;
         }
 
-        brandService.update(id, {
-            brandName: name
+        addressService.update(id, {
+            street,
+            city,
+            country
         })
         .then(data => {
             console.log("Successfully updated")
@@ -51,8 +58,18 @@ export default function EditBrand() {
             <div className="w-50 m-auto">
                 <form>
                     <div className="form-group mt-2">
-                        <label>Name</label>
-                        <input ref={nameRef} className="form-control" name="brandName" />
+                        <label>Street</label>
+                        <input ref={streetRef} className="form-control" name="street" />
+                    </div>
+
+                    <div className="form-group mt-2">
+                        <label>City</label>
+                        <input ref={cityRef} className="form-control" name="city" />
+                    </div>
+
+                    <div className="form-group mt-2">
+                        <label>State</label>
+                        <input ref={stateRef} className="form-control" name="state" />
                     </div>
                    
                     <div className="form-group mt-2">

@@ -26,9 +26,9 @@ import com.example.demo.model.Address;
 import com.example.demo.repository.AddressRepository;
 
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/address")
+@CrossOrigin(origins = "*")
 public class AddressController {
     private final AddressRepository addressRepository;
 

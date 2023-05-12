@@ -7,6 +7,9 @@ import Navbar from "./components/Navbar/Navbar";
 import BrandAdd from "./pages/Brand/BrandAdd";
 import BrandList from "./pages/Brand/BrandList";
 import EditBrand from "./pages/Brand/EditBrand";
+import AddressList from "./pages/Address/AddressList";
+import AddressAdd from "./pages/Address/AddressAdd";
+import AddressEdit from "./pages/Address/AddressEdit";
 
 function App() {
   return (
@@ -16,6 +19,10 @@ function App() {
         <Route path="/brands/edit/:id" exact element={<EditBrand />} />
         <Route path="/brands/add" exact element={<BrandAdd />} />
         <Route path="/brands" exact element={<BrandList />} />
+
+        <Route path="/address/edit/:id" exact element={<AddressEdit />} />
+        <Route path="/address/add" exact element={<AddressAdd />} />
+        <Route path="/address" exact element={<AddressList />} />
         
         <Route path="*" element={<><h1>Not found</h1></>} />
       </Routes>

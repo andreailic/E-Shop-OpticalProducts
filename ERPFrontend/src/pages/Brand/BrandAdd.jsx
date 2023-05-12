@@ -20,9 +20,9 @@ export default function BrandAdd() {
             brandName: name
         })
         .then(data => {
-            console.log("Uspesno dodato")
+            console.log("Successfully saved")
             setError(false);
-            alert("Uspesno dodato");
+            alert("Successfully saved");
         })
         .catch(err => {
             console.log(err)
