@@ -22,7 +22,23 @@ export default function Navbar() {
                     </li>
 
                     <li className="nav-item">
-                        <NavLink className="nav-link " to={"/category"} >Category</NavLink>
+                        <NavLink className="nav-link " to={"/category"} >Categories</NavLink>
+                    </li>
+
+                    <li className="nav-item">
+                        <NavLink className="nav-link " to={"/product"} >Products</NavLink>
+                    </li>
+
+                    <li className="nav-item">
+                        <NavLink className="nav-link " to={"/review"} >Reviews</NavLink>
+                    </li>
+
+                    <li className="nav-item">
+                        <NavLink className="nav-link " to={"/customer"} >Customers</NavLink>
+                    </li>
+
+                    <li className="nav-item">
+                        <NavLink className="nav-link " to={"/staff"} >Staff</NavLink>
                     </li>
 
                 </ul>

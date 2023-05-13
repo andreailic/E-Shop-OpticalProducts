@@ -26,12 +26,12 @@ public class Review {
 	private String comment;
 	
 	// bi-directional many-to-one association to Brand
-			@ManyToOne(cascade = CascadeType.ALL)
+			@ManyToOne()
 			@JoinColumn(name="userId")
 			private User user;
 			
 	// bi-directional many-to-one association to Brand
-			@ManyToOne(cascade = CascadeType.ALL)
+			@ManyToOne()
 			@JoinColumn(name="productId")
 			private Product product;
 					

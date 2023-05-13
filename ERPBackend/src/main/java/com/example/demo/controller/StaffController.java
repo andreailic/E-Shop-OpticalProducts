@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import com.example.demo.model.Customer;
+import com.example.demo.model.ERole;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,7 @@ public class StaffController {
 	@PostMapping("/staff")
 	public ResponseEntity<Staff> postUser(@RequestBody Staff staff){
 		if (!staffRepository.existsById(staff.getId())) {
+			staff.getUser().setRole(ERole.ROLE_STAFF);
 			staffRepository.save(staff);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
@@ -47,6 +49,9 @@ public class StaffController {
 	    public ResponseEntity<Staff> updateStaff(@PathVariable("id") int id, @RequestBody Staff newStaff) {		
 		 Staff staff = staffRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Ne postoji radnik sa id: " + id));
+
+		 staff.getUser().setName(newStaff.getUser().getName());
+		 staff.getUser().setSurname(newStaff.getUser().getSurname());
 		 staff.setPosition(newStaff.getPosition());
 	        
 		 Staff updatedStaff = staffRepository.save(staff);

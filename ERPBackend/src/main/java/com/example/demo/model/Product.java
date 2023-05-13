@@ -31,11 +31,11 @@ public class Product implements Serializable {
 	private String description;
 	private int lager;
 
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne()
 	@JoinColumn(name="brand_id")
 	private Brand brand;
 
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne()
 	@JoinColumn(name="category_id")
 	private Category category;
 

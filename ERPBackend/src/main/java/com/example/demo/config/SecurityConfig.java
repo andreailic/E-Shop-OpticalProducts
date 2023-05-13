@@ -63,6 +63,27 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/categories/category/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
                 .requestMatchers(HttpMethod.DELETE, "/categories/category/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
 
+                .requestMatchers(HttpMethod.GET, "/product/product/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/product/product").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.PUT, "/product/product/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.DELETE, "/product/product/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+
+                .requestMatchers(HttpMethod.GET, "/review/review/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/review/review").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.PUT, "/review/review/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.DELETE, "/review/review/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+
+                .requestMatchers(HttpMethod.GET, "/customer/customer/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/customer/customer").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.PUT, "/customer/customer/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.DELETE, "/customer/customer/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+
+                .requestMatchers(HttpMethod.GET, "/staff/staff/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/staff/staff").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.PUT, "/staff/staff/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.DELETE, "/staff/staff/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+
+
 //                 .requestMatchers(POST, "/api/v1/admin/**").hasAuthority(ADMIN_CREATE.name())
 //                 .requestMatchers(PUT, "/api/v1/admin/**").hasAuthority(ADMIN_UPDATE.name())
 //                 .requestMatchers(DELETE, "/api/v1/admin/**").hasAuthority(ADMIN_DELETE.name())

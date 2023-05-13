@@ -4,6 +4,7 @@ package com.example.demo.controller;
 import java.util.Collection;
 import java.util.Optional;
 
+import com.example.demo.model.ERole;
 import com.example.demo.model.User;
 import com.example.demo.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,7 @@ public class CustomerController {
 		}
 
 		customer.setAddress(addressOpt.get());
+		customer.getUser().setRole(ERole.ROLE_CUSTOMER);
 		if (!customerRepository.existsById(customer.getId())) {
 			customerRepository.save(customer);
 			return new ResponseEntity<User>(HttpStatus.OK);
@@ -64,6 +66,9 @@ public class CustomerController {
     public ResponseEntity<Customer> updateCustomer(@PathVariable("id") int id, @RequestBody Customer newCustomer) {		
     	Customer customer = customerRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Ne postoji kupac sa id: " + id));
+
+		customer.getUser().setName(newCustomer.getUser().getName());
+		customer.getUser().setSurname(newCustomer.getUser().getSurname());
         customer.setPhone(newCustomer.getPhone());
         customer.setAddress(newCustomer.getAddress());
         

@@ -13,6 +13,18 @@ import AddressEdit from "./pages/Address/AddressEdit";
 import CategoryList from "./pages/Category/CategoryList";
 import CategoryAdd from "./pages/Category/CategoryAdd";
 import CategoryEdit from "./pages/Category/CategoryEdit";
+import ProductList from "./pages/Product/ProductList";
+import ProductAdd from "./pages/Product/ProductAdd";
+import ProductEdit from "./pages/Product/ProductEdit";
+import ReviewList from "./pages/Review/ReviewList";
+import ReviewAdd from "./pages/Review/ReviewAdd";
+import ReviewEdit from "./pages/Review/ReviewEdit";
+import CustomerList from "./pages/Customer/CustomerList";
+import CustomerAdd from "./pages/Customer/CustomerAdd";
+import CustomerEdit from "./pages/Customer/CustomerEdit";
+import StaffList from "./pages/Staff/StaffList";
+import StaffAdd from "./pages/Staff/StaffAdd";
+import StaffEdit from "./pages/Staff/StaffEdit";
 
 function App() {
   return (
@@ -30,6 +42,22 @@ function App() {
         <Route path="/category/edit/:id" exact element={<CategoryEdit />} />
         <Route path="/category/add" exact element={<CategoryAdd />} />
         <Route path="/category" exact element={<CategoryList />} />
+
+        <Route path="/product/edit/:id" exact element={<ProductEdit />} />
+        <Route path="/product/add" exact element={<ProductAdd />} />
+        <Route path="/product" exact element={<ProductList />} />
+
+        <Route path="/review/edit/:id" exact element={<ReviewEdit />} />  
+        <Route path="/review/add" exact element={<ReviewAdd />} />
+        <Route path="/review" exact element={<ReviewList />} />
+
+        <Route path="/customer/edit/:id" exact element={<CustomerEdit />} />  
+        <Route path="/customer/add" exact element={<CustomerAdd />} />
+        <Route path="/customer" exact element={<CustomerList />} />
+
+        <Route path="/staff/edit/:id" exact element={<StaffEdit />} />  
+        <Route path="/staff/add" exact element={<StaffAdd />} />
+        <Route path="/staff" exact element={<StaffList />} />
         
         <Route path="*" element={<><h1>Not found</h1></>} />
       </Routes>

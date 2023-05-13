@@ -15,13 +15,13 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private int phone;
+	private String phone;
 
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name="addressId")
 	private Address address;
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "userId")
 	private User user;
 
@@ -33,24 +33,24 @@ public class Customer {
 		this.user = user;
 	}
 	
-	public Customer(User user, Address address, int phone) {
+	public Customer(User user, Address address, String phone) {
 		this.user = user;
 		this.address=address;
 		this.phone=phone;
 	}
 	
-	public Customer(User user, ERole role, Address address, int phone) {
+	public Customer(User user, ERole role, Address address, String phone) {
 		this.user = user;
 		this.user.setRole(role);
 		this.address=address;
 		this.phone=phone;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
