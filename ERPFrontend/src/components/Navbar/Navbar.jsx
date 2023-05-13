@@ -21,6 +21,10 @@ export default function Navbar() {
                         <NavLink className="nav-link " to={"/address"} >Addresses</NavLink>
                     </li>
 
+                    <li className="nav-item">
+                        <NavLink className="nav-link " to={"/category"} >Category</NavLink>
+                    </li>
+
                 </ul>
             </div>
         </nav>

@@ -10,6 +10,9 @@ import EditBrand from "./pages/Brand/EditBrand";
 import AddressList from "./pages/Address/AddressList";
 import AddressAdd from "./pages/Address/AddressAdd";
 import AddressEdit from "./pages/Address/AddressEdit";
+import CategoryList from "./pages/Category/CategoryList";
+import CategoryAdd from "./pages/Category/CategoryAdd";
+import CategoryEdit from "./pages/Category/CategoryEdit";
 
 function App() {
   return (
@@ -23,6 +26,10 @@ function App() {
         <Route path="/address/edit/:id" exact element={<AddressEdit />} />
         <Route path="/address/add" exact element={<AddressAdd />} />
         <Route path="/address" exact element={<AddressList />} />
+
+        <Route path="/category/edit/:id" exact element={<CategoryEdit />} />
+        <Route path="/category/add" exact element={<CategoryAdd />} />
+        <Route path="/category" exact element={<CategoryList />} />
         
         <Route path="*" element={<><h1>Not found</h1></>} />
       </Routes>

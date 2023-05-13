@@ -58,6 +58,11 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/brand/brand/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
                 .requestMatchers(HttpMethod.DELETE, "/brand/brand/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
 
+                .requestMatchers(HttpMethod.GET, "/categories/category/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/categories/category").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.PUT, "/categories/category/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.DELETE, "/categories/category/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+
 //                 .requestMatchers(POST, "/api/v1/admin/**").hasAuthority(ADMIN_CREATE.name())
 //                 .requestMatchers(PUT, "/api/v1/admin/**").hasAuthority(ADMIN_UPDATE.name())
 //                 .requestMatchers(DELETE, "/api/v1/admin/**").hasAuthority(ADMIN_DELETE.name())
