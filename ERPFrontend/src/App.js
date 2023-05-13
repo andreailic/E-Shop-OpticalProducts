@@ -25,6 +25,8 @@ import CustomerEdit from "./pages/Customer/CustomerEdit";
 import StaffList from "./pages/Staff/StaffList";
 import StaffAdd from "./pages/Staff/StaffAdd";
 import StaffEdit from "./pages/Staff/StaffEdit";
+import OrderCreate from "./pages/Order/OrderCreate";
+import OrderList from "./pages/Order/OrdersList";
 
 function App() {
   return (
@@ -58,6 +60,9 @@ function App() {
         <Route path="/staff/edit/:id" exact element={<StaffEdit />} />  
         <Route path="/staff/add" exact element={<StaffAdd />} />
         <Route path="/staff" exact element={<StaffList />} />
+
+        <Route path="/order/create" exact element={<OrderCreate />} />
+        <Route path="/orders" exact element={<OrderList />} />
         
         <Route path="*" element={<><h1>Not found</h1></>} />
       </Routes>

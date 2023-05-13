@@ -83,6 +83,11 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/staff/staff/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
                 .requestMatchers(HttpMethod.DELETE, "/staff/staff/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
 
+                .requestMatchers(HttpMethod.GET, "/orders/orders/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/orders/orders").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.PUT, "/orders/orders/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.DELETE, "/orders/orders/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+
 
 //                 .requestMatchers(POST, "/api/v1/admin/**").hasAuthority(ADMIN_CREATE.name())
 //                 .requestMatchers(PUT, "/api/v1/admin/**").hasAuthority(ADMIN_UPDATE.name())

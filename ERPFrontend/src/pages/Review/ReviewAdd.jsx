@@ -57,24 +57,24 @@ export default function ReviewAdd() {
 
             <div className="w-50 m-auto">
                 <form>
-                <div className="form-group mt-2">
-                        <label>Product</label>
-                        <select ref={productRef} className="form-control">
-                            {products.map((p, idx) => (
-                                <option key={idx} value={p.productId}>{p.name}</option>
-                            ))}
-                        </select>
-                    </div>
+                        <div className="form-group mt-2">
+                            <label>Product</label>
+                            <select ref={productRef} className="form-control">
+                                {products.map((p, idx) => (
+                                    <option key={idx} value={p.productId}>{p.name}</option>
+                                ))}
+                            </select>
+                        </div>
 
-                    <div className="form-group mt-2">
-                        <label>Rating</label>
-                        <input type="number" ref={ratingRef} className="form-control" name="price" />
-                    </div>
+                        <div className="form-group mt-2">
+                            <label>Rating</label>
+                            <input type="number" ref={ratingRef} className="form-control" name="price" />
+                        </div>
 
-                    <div className="form-group mt-2">
-                        <label>Comment</label>
-                        <textarea ref={commentRef} className="form-control"></textarea>
-                    </div>
+                        <div className="form-group mt-2">
+                            <label>Comment</label>
+                            <textarea ref={commentRef} className="form-control"></textarea>
+                        </div>
 
                     <div className="form-group mt-2">
                         <button type="button" className="btn btn-primary" onClick={save}>Save</button>

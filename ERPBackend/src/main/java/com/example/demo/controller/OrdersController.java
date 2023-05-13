@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -43,9 +46,11 @@ public class OrdersController {
 	     }
 	 }
     @PostMapping("/orders")
-	public ResponseEntity<Order> createOrders(@RequestBody Order orders) {
-		if(!ordersRepository.existsById(orders.getOrderId())) {
-			ordersRepository.save(orders);
+	public ResponseEntity<Order> createOrders(@RequestBody Order order) {
+		if(!ordersRepository.existsById(order.getOrderId())) {
+			order.setOrderDate(Date.valueOf(LocalDate.now()));
+			order.setOrderStatus("CREATED");
+			ordersRepository.save(order);
 			return new ResponseEntity<Order>(HttpStatus.OK);
 		}
 		return new ResponseEntity<Order>(HttpStatus.CONFLICT);
@@ -55,9 +60,8 @@ public class OrdersController {
    	public ResponseEntity<Order> updateOrders(@PathVariable("id") int id, @RequestBody Order newOrders) {
     	Order orders = ordersRepository.findById(id)
    				.orElseThrow(() -> new ResourceNotFoundException("Ne postoji porudzbina sa id: " + id));
-   		orders.setOrderDate(newOrders.getOrderDate());
-   		orders.setOrderStatus(newOrders.getOrderStatus());
-   		orders.setOrderPrice(newOrders.getOrderPrice());
+
+		orders.setOrderStatus(newOrders.getOrderStatus());
    		
    		Order updatedOrders = ordersRepository.save(orders);
    		

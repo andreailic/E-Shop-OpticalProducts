@@ -41,6 +41,13 @@ export default function Navbar() {
                         <NavLink className="nav-link " to={"/staff"} >Staff</NavLink>
                     </li>
 
+                    <li className="nav-item">
+                        <NavLink className="nav-link " to={"/order/create"} >New order</NavLink>
+                    </li>
+
+                    <li className="nav-item">
+                        <NavLink className="nav-link " to={"/orders"} >Orders</NavLink>
+                    </li>
                 </ul>
             </div>
         </nav>

@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -22,23 +23,24 @@ public class OrderItem {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ORDER_ITEM_ID_GENERATOR")
 	private int orderItemId;
 	
-	private String quantity;
+	private int quantity;
 	
 	// bi-directional many-to-one association to Brand
-				@ManyToOne(cascade = CascadeType.ALL)
-				@JoinColumn(name="Product")
+				@ManyToOne()
+				@JoinColumn(name="product_id")
 				private Product product;
 				
 	// bi-directional many-to-one association to Brand
-				@ManyToOne(cascade = CascadeType.ALL)
-				@JoinColumn(name="Orders")
+				@ManyToOne()
+				@JoinColumn(name="order_id")
+				@JsonIgnore
 				private Order orders;
 				
 				public OrderItem() {
 					
 				}
 
-				public OrderItem(int order_item_id, String quantity, Product product, Order orders) {
+				public OrderItem(int order_item_id, int quantity, Product product, Order orders) {
 					super();
 					this.orderItemId = order_item_id;
 					this.quantity = quantity;
@@ -54,11 +56,11 @@ public class OrderItem {
 					this.orderItemId = orderItemId;
 				}
 
-				public String getQuantity() {
+				public int getQuantity() {
 					return quantity;
 				}
 
-				public void setQuantity(String quantity) {
+				public void setQuantity(int quantity) {
 					this.quantity = quantity;
 				}
 
