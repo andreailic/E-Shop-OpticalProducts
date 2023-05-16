@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(
                         "/auth/**",
+                        "webhook/**",
                         "/swagger-resources",
                         "/swagger-resources/**",
                         "/configuration/ui",
@@ -87,6 +88,11 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/orders/orders").permitAll() //hasRole(ERole.ROLE_STAFF.name())
                 .requestMatchers(HttpMethod.PUT, "/orders/orders/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
                 .requestMatchers(HttpMethod.DELETE, "/orders/orders/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+
+                .requestMatchers(HttpMethod.GET, "/payment/payment/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/payment/payment").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.PUT, "/payment/payment/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
+                .requestMatchers(HttpMethod.DELETE, "/payment/payment/**").permitAll() //hasRole(ERole.ROLE_STAFF.name())
 
 
 //                 .requestMatchers(POST, "/api/v1/admin/**").hasAuthority(ADMIN_CREATE.name())

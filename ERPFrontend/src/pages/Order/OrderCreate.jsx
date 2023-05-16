@@ -4,6 +4,8 @@ import FilterComponent from "../../components/Filter/FilterComponent";
 import DataTable from "react-data-table-component";
 import productService from "../../services/product.service";
 import orderService from "../../services/order.service";
+import StripeCheckout from "react-stripe-checkout";
+import paymentService from "../../services/payment.service";
 
 export default function OrderCreate() {
 
@@ -109,6 +111,46 @@ export default function OrderCreate() {
         )
     }
 
+    async function handleToken(token) {
+           
+        let total = 0;
+        data.forEach(x => total = x.selectedQuantity * x.price);
+
+        const orderItems = data.map(x => { 
+            return {
+                product: {...x}, 
+                quantity: x.selectedQuantity,
+            }
+        });
+        
+        orderService.create({
+            orderItems,
+            user: {
+                userId: localStorage.getItem('userId')
+            },
+            orderPrice: total
+        })
+        .then(response => {
+            paymentService.pay({
+                paymentMethod: 'Card',
+                order: {
+                    orderId: response.data.orderId
+                }
+            }, token.tokenId, total).then(response => {
+                alert("Successfully ordered");
+                navigate("/product");    
+            }).catch(error => {
+                console.log(error);
+            });
+        })
+        .catch(err => {
+
+        });
+
+    
+    }
+
+
     let total = 0;
     data.forEach(x => total = x.selectedQuantity * x.price);
 
@@ -123,13 +165,23 @@ export default function OrderCreate() {
         orderService.create({
             orderItems,
             user: {
-                userId: 8
+                userId: localStorage.getItem('userId')
             },
             orderPrice: total
         })
         .then(response => {
-            alert("Successfully saved");
-            navigate("/product");
+            paymentService.pay({
+                paymentMethod: 'Cash',
+                order: {
+                    orderId: response.data.orderId
+                }
+            }).then(response => {
+                alert("Successfully ordered");
+                navigate("/product");    
+            }).catch(error => {
+                console.log(error);
+            })
+            
         })
         .catch(err => {
 
@@ -155,9 +207,18 @@ export default function OrderCreate() {
 
             <h3 className="text-right">Total {total}</h3>
 
-            <div className="text-center">
-                <button title="Total must be different from 0" className="btn btn-success" onClick={confirmOrder} disabled={total === 0}>Confirm order</button>
+            {total === 0 ? null : <div className="text-center">
+                <StripeCheckout
+                stripeKey={process.env.REACT_APP_STRIPE_KEY}
+                token={handleToken}
+            />
             </div>
+            }
+
+            {total === 0 ? null : <div className="text-center">
+                <button title="Total must be different from 0" className="btn btn-success" onClick={confirmOrder}>Cash order</button>
+            </div>
+            }
         </div>  
 
         </>

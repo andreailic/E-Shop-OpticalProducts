@@ -9,6 +9,7 @@ import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.exception.ResourceNotFoundException;
@@ -19,6 +20,9 @@ import com.example.demo.repository.StaffRepository;
 @RestController
 @RequestMapping("/staff")
 public class StaffController {
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	 @Autowired
 	    private StaffRepository staffRepository;
@@ -40,6 +44,7 @@ public class StaffController {
 	public ResponseEntity<Staff> postUser(@RequestBody Staff staff){
 		if (!staffRepository.existsById(staff.getId())) {
 			staff.getUser().setRole(ERole.ROLE_STAFF);
+			staff.getUser().setPassword(passwordEncoder.encode(staff.getUser().getPassword()));
 			staffRepository.save(staff);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}

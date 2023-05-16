@@ -27,6 +27,8 @@ import StaffAdd from "./pages/Staff/StaffAdd";
 import StaffEdit from "./pages/Staff/StaffEdit";
 import OrderCreate from "./pages/Order/OrderCreate";
 import OrderList from "./pages/Order/OrdersList";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
 
 function App() {
   return (
@@ -63,6 +65,9 @@ function App() {
 
         <Route path="/order/create" exact element={<OrderCreate />} />
         <Route path="/orders" exact element={<OrderList />} />
+
+        <Route path="/login" exact element={<Login />} />
+        <Route path="/register" exact element={<Register />} />
         
         <Route path="*" element={<><h1>Not found</h1></>} />
       </Routes>

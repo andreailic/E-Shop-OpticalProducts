@@ -51,7 +51,7 @@ public class OrdersController {
 			order.setOrderDate(Date.valueOf(LocalDate.now()));
 			order.setOrderStatus("CREATED");
 			ordersRepository.save(order);
-			return new ResponseEntity<Order>(HttpStatus.OK);
+			return new ResponseEntity<Order>(order, HttpStatus.OK);
 		}
 		return new ResponseEntity<Order>(HttpStatus.CONFLICT);
 	}

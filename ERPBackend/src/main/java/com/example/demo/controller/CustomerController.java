@@ -10,6 +10,7 @@ import com.example.demo.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.exception.ResourceNotFoundException;
@@ -21,14 +22,16 @@ import com.example.demo.repository.CustomerRepository;
 @RequestMapping("/customer")
 public class CustomerController {
     
-    @Autowired
     private final CustomerRepository customerRepository;
 	private final AddressRepository addressRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	public CustomerController(CustomerRepository customerRepository,
-							  AddressRepository addressRepository) {
+							  AddressRepository addressRepository,
+							  PasswordEncoder passwordEncoder) {
 		this.customerRepository = customerRepository;
 		this.addressRepository = addressRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@GetMapping("/customer")
@@ -54,6 +57,7 @@ public class CustomerController {
 		}
 
 		customer.setAddress(addressOpt.get());
+		customer.getUser().setPassword(passwordEncoder.encode(customer.getUser().getPassword()));
 		customer.getUser().setRole(ERole.ROLE_CUSTOMER);
 		if (!customerRepository.existsById(customer.getId())) {
 			customerRepository.save(customer);

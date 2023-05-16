@@ -36,6 +36,10 @@ public class Order {
 	@OneToMany(mappedBy="orders", cascade = {CascadeType.ALL})
 	private List<OrderItem> orderItems = new ArrayList<>();
 
+	@OneToOne(mappedBy = "order", cascade = CascadeType.REMOVE)
+	@JsonIgnore
+	private Payment payment;
+
 	public Order() {
 
 	}
@@ -106,5 +110,13 @@ public class Order {
 
 	public void setDiscount(float discount) {
 		this.discount = discount;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 }
