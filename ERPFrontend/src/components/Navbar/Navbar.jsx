@@ -1,6 +1,14 @@
 import { NavLink } from 'react-router-dom';
 
 export default function Navbar() {
+
+    const userRole = localStorage.getItem("role");
+
+    function logout() {
+        localStorage.clear();
+        window.location.href = "";
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,13 +21,13 @@ export default function Navbar() {
                         <NavLink to={"/"} className="nav-link">Pocetna</NavLink>
                     </li>
 
-                    <li className="nav-item">
+                    {userRole && <li className="nav-item">
                         <NavLink className="nav-link " to={"/brands"} >Brands</NavLink>
-                    </li>
+                    </li>}
 
-                    <li className="nav-item">
+                    {userRole && <li className="nav-item">
                         <NavLink className="nav-link " to={"/address"} >Addresses</NavLink>
-                    </li>
+                    </li>}
 
                     <li className="nav-item">
                         <NavLink className="nav-link " to={"/category"} >Categories</NavLink>
@@ -33,29 +41,46 @@ export default function Navbar() {
                         <NavLink className="nav-link " to={"/review"} >Reviews</NavLink>
                     </li>
 
+                    {userRole && userRole === "ROLE_STAFF" &&
                     <li className="nav-item">
                         <NavLink className="nav-link " to={"/customer"} >Customers</NavLink>
                     </li>
+                    }
 
+                    {userRole && userRole === "ROLE_STAFF" &&
                     <li className="nav-item">
                         <NavLink className="nav-link " to={"/staff"} >Staff</NavLink>
                     </li>
+                    }
 
+                    {userRole && userRole === "ROLE_CUSTOMER" &&
                     <li className="nav-item">
                         <NavLink className="nav-link " to={"/order/create"} >New order</NavLink>
                     </li>
+                    }
 
+                    {userRole && userRole === "ROLE_STAFF" &&
                     <li className="nav-item">
                         <NavLink className="nav-link " to={"/orders"} >Orders</NavLink>
                     </li>
-
+                    }       
+                    {!userRole &&
                     <li className="nav-item">
                         <NavLink className="nav-link " to={"/login"} >Login</NavLink>
                     </li>
+                    }
 
+                    {!userRole &&
                     <li className="nav-item">
                         <NavLink className="nav-link " to={"/register"} >Register</NavLink>
                     </li>
+                    }
+
+                    {userRole &&
+                    <li className="nav-item">
+                        <span className="nav-link" onClick={logout}>Logout</span>
+                    </li>
+                    }
                 </ul>
             </div>
         </nav>

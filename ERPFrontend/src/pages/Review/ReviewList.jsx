@@ -6,6 +6,8 @@ import reviewService from "../../services/review.service";
 
 export default function ReviewList() {
 
+    const userRole = localStorage.getItem('role');
+
     //Const 
     const columns = [
         {
@@ -34,13 +36,13 @@ export default function ReviewList() {
             sortable: true,
         },
         {
-            cell:(row) => <Link className="btn btn-warning" to={"/review/edit/" + row.reviewId}>Edit</Link>,
+            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <Link className="btn btn-warning" to={"/review/edit/" + row.reviewId}>Edit</Link>},
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
         {
-            cell:(row) => <button className="btn btn-danger" onClick={() => deleteRecord(row.reviewId)} id={row.reviewId}>Delete</button>,
+            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.reviewId)} id={row.reviewId}>Delete</button>},
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -89,9 +91,9 @@ export default function ReviewList() {
 
     return (
         <>
-            <div>
+            {userRole && <div>
                 <Link to="/review/add" className="btn btn-success">New review</Link>
-            </div>
+            </div>}
 
             <div className="col-md-12">
             <DataTable

@@ -6,6 +6,7 @@ public class LoginResponse {
     private String userLastName;
     private String token;
     private String refreshToken;
+    private String role;
 
     public String getUserId() {
         return userId;
@@ -45,5 +46,13 @@ public class LoginResponse {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

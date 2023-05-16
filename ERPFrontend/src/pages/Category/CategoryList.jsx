@@ -6,6 +6,8 @@ import categoryService from "../../services/category.service";
 
 export default function CategoryList() {
 
+    const userRole = localStorage.getItem("role");
+
     //Const 
     const columns = [
         {
@@ -19,13 +21,13 @@ export default function CategoryList() {
             sortable: true,
         },
         {
-            cell:(row) => <Link className="btn btn-warning" to={"/category/edit/" + row.categoryId}>Edit</Link>,
+            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <Link className="btn btn-warning" to={"/category/edit/" + row.categoryId}>Edit</Link>},
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
         {
-            cell:(row) => <button className="btn btn-danger" onClick={() => deleteRecord(row.categoryId)} id={row.categoryId}>Delete</button>,
+            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.categoryId)} id={row.categoryId}>Delete</button>},
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -74,9 +76,9 @@ export default function CategoryList() {
 
     return (
         <>
-            <div>
+           {userRole && userRole === "ROLE_STAFF" && <div>
                 <Link to="/category/add" className="btn btn-success">New category</Link>
-            </div>
+            </div>}
 
             <div className="col-md-12">
             <DataTable

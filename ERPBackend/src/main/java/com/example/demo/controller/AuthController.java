@@ -61,7 +61,7 @@ public class AuthController {
         response.setUserId(String.valueOf(user.getUserId()));
         response.setUserName(user.getName());
         response.setUserLastName(user.getSurname());
-
+        response.setRole(user.getRole().toString());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

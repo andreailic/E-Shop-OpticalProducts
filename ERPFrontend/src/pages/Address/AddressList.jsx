@@ -6,6 +6,8 @@ import addressService from "../../services/address.service";
 
 export default function AddressList() {
 
+    const userRole = localStorage.getItem("role");
+
     //Const 
     const columns = [
         {
@@ -24,13 +26,13 @@ export default function AddressList() {
             sortable: true,
         },
         {
-            cell:(row) => <Link className="btn btn-warning" to={"/address/edit/" + row.addressId}>Edit</Link>,
+            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <Link className="btn btn-warning" to={"/address/edit/" + row.addressId}>Edit</Link>},
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
         {
-            cell:(row) => <button className="btn btn-danger" onClick={() => deleteRecord(row.addressId)} id={row.addressId}>Delete</button>,
+            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.addressId)} id={row.addressId}>Delete</button>},
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -80,9 +82,10 @@ export default function AddressList() {
 
     return (
         <>
-            <div>
+            {userRole && userRole === "ROLE_STAFF" && <div>
                 <Link to="/address/add" className="btn btn-success">New address</Link>
             </div>
+            }
 
             <div className="col-md-12">
             <DataTable

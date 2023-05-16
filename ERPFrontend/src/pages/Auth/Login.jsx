@@ -25,7 +25,8 @@ function Login(props) {
                 localStorage.setItem('userName', response.data.name);
                 localStorage.setItem('userLastName', response.data.lastName);
                 localStorage.setItem('userId', response.data.userId);
-                navigate('/');
+                localStorage.setItem('role', response.data.role);
+                window.location.href= "/";
             }
         }).catch(error => {
             if (error.response.status === 400 || error.response.status === 403) {

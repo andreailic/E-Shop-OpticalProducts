@@ -6,6 +6,8 @@ import productService from "../../services/product.service";
 
 export default function ProductList() {
 
+    const userRole = localStorage.getItem("role");
+
     //Const 
     const columns = [
         {
@@ -44,13 +46,13 @@ export default function ProductList() {
             sortable: true,
         },
         {
-            cell:(row) => <Link className="btn btn-warning" to={"/product/edit/" + row.productId}>Edit</Link>,
+            cell:(row) => {userRole && userRole === "ROLE_STAFF" &&<Link className="btn btn-warning" to={"/product/edit/" + row.productId}>Edit</Link>},
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
         {
-            cell:(row) => <button className="btn btn-danger" onClick={() => deleteRecord(row.productId)} id={row.productId}>Delete</button>,
+            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.productId)} id={row.productId}>Delete</button>},
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -99,9 +101,9 @@ export default function ProductList() {
 
     return (
         <>
-            <div>
+           {userRole && userRole === "ROLE_STAFF" && <div>
                 <Link to="/product/add" className="btn btn-success">New product</Link>
-            </div>
+            </div>}
 
             <div className="col-md-12">
             <DataTable

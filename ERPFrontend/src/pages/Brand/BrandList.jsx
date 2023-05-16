@@ -6,6 +6,8 @@ import DataTable from "react-data-table-component";
 
 export default function BrandList() {
 
+    const userRole = localStorage.getItem("role");
+
     //Const 
     const columns = [
         {
@@ -19,13 +21,13 @@ export default function BrandList() {
             sortable: true,
         },
         {
-            cell:(row) => <Link className="btn btn-warning" to={"/brands/edit/" + row.brandId}>Edit</Link>,
+            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <Link className="btn btn-warning" to={"/brands/edit/" + row.brandId}>Edit</Link>},
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
         {
-            cell:(row) => <button className="btn btn-danger" onClick={() => deleteRecord(row.brandId)} id={row.brandId}>Delete</button>,
+            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.brandId)} id={row.brandId}>Delete</button> },
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -74,9 +76,10 @@ export default function BrandList() {
 
     return (
         <>
-            <div>
+            {userRole && userRole === "ROLE_STAFF" && <div>
                 <Link to="/brands/add" className="btn btn-success">New brand</Link>
             </div>
+}
 
             <div className="col-md-12">
             <DataTable
