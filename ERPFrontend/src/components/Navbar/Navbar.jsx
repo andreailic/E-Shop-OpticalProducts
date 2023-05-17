@@ -63,7 +63,14 @@ export default function Navbar() {
                     <li className="nav-item">
                         <NavLink className="nav-link " to={"/orders"} >Orders</NavLink>
                     </li>
-                    }       
+                    }    
+
+                    {userRole && userRole === "ROLE_STAFF" &&
+                    <li className="nav-item">
+                        <NavLink className="nav-link " to={"/payments"} >Payments</NavLink>
+                    </li>
+                    }    
+
                     {!userRole &&
                     <li className="nav-item">
                         <NavLink className="nav-link " to={"/login"} >Login</NavLink>

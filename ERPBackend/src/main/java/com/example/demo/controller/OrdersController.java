@@ -23,7 +23,7 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Order;
 import com.example.demo.repository.OrdersRepository;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/orders")
 public class OrdersController {
@@ -46,14 +46,14 @@ public class OrdersController {
 	     }
 	 }
     @PostMapping("/orders")
-	public ResponseEntity<Order> createOrders(@RequestBody Order order) {
+	public ResponseEntity<Integer> createOrders(@RequestBody Order order) {
 		if(!ordersRepository.existsById(order.getOrderId())) {
 			order.setOrderDate(Date.valueOf(LocalDate.now()));
 			order.setOrderStatus("CREATED");
 			ordersRepository.save(order);
-			return new ResponseEntity<Order>(order, HttpStatus.OK);
+			return new ResponseEntity<Integer>(order.getOrderId(), HttpStatus.OK);
 		}
-		return new ResponseEntity<Order>(HttpStatus.CONFLICT);
+		return new ResponseEntity<Integer>(HttpStatus.CONFLICT);
 	}
     
     @PutMapping("/orders/{id}")

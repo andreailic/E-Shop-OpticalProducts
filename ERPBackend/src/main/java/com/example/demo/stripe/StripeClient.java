@@ -13,8 +13,8 @@ public class StripeClient {
 
     @Value("${stripe.key}")
     private String stripeKey;
-    @Autowired
-    StripeClient() {
+
+    public StripeClient() {
         Stripe.apiKey = stripeKey;
     }
     public Customer createCustomer(String token, String email) throws Exception {
@@ -27,6 +27,7 @@ public class StripeClient {
         return Customer.retrieve(id);
     }
     public Charge chargeNewCard(String token, double amount) throws Exception {
+        Stripe.apiKey = stripeKey;
         Map<String, Object> chargeParams = new HashMap<String, Object>();
         chargeParams.put("amount", (int)(amount * 100));
         chargeParams.put("currency", "USD");

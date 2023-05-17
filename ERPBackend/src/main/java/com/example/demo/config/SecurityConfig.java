@@ -75,7 +75,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/review/review/**").hasRole("STAFF")
 
                 .requestMatchers(HttpMethod.GET, "/customer/customer/**").hasRole("STAFF")
-                .requestMatchers(HttpMethod.POST, "/customer/customer").hasRole("STAFF")
+                .requestMatchers(HttpMethod.POST, "/customer/customer").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/customer/customer/**").hasRole("STAFF")
                 .requestMatchers(HttpMethod.DELETE, "/customer/customer/**").hasRole("STAFF")
 
@@ -89,10 +89,12 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/orders/orders/**").hasRole("STAFF")
                 .requestMatchers(HttpMethod.DELETE, "/orders/orders/**").hasRole("STAFF")
 
-                .requestMatchers(HttpMethod.GET, "/payment/payment/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/payment/payment").permitAll() //hasRole("STAFF")
-                .requestMatchers(HttpMethod.PUT, "/payment/payment/**").permitAll() //hasRole("STAFF")
-                .requestMatchers(HttpMethod.DELETE, "/payment/payment/**").permitAll() //hasRole("STAFF")
+                .requestMatchers(HttpMethod.GET, "/payment/payment/**").hasRole("STAFF")
+                .requestMatchers(HttpMethod.POST, "/payment/payment").hasRole("CUSTOMER")
+                .requestMatchers(HttpMethod.PUT, "/payment/payment/**").hasRole("STAFF")
+                .requestMatchers(HttpMethod.DELETE, "/payment/payment/**").hasRole("STAFF")
+
+                .requestMatchers(HttpMethod.GET, "/stripe/payment/**").hasRole("STAFF")
                 
                 .anyRequest()
                 .authenticated()

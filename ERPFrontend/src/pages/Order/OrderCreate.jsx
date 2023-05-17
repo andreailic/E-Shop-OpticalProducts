@@ -114,8 +114,7 @@ export default function OrderCreate() {
     async function handleToken(token) {
            
         let total = 0;
-        data.forEach(x => total = x.selectedQuantity * x.price);
-
+        data.forEach(x => total += x.selectedQuantity * x.price);
         const orderItems = data.map(x => { 
             return {
                 product: {...x}, 
@@ -134,13 +133,14 @@ export default function OrderCreate() {
             paymentService.pay({
                 paymentMethod: 'Card',
                 order: {
-                    orderId: response.data.orderId
+                    orderId: response.data
                 }
-            }, token.tokenId, total).then(response => {
+            }, token.id, total).then(response => {
                 alert("Successfully ordered");
                 navigate("/product");    
             }).catch(error => {
                 console.log(error);
+                alert("Payment not successfuul!")
             });
         })
         .catch(err => {
@@ -150,11 +150,11 @@ export default function OrderCreate() {
     
     }
 
-
-    let total = 0;
-    data.forEach(x => total = x.selectedQuantity * x.price);
-
     function confirmOrder() {
+        let total = 0;
+        data.forEach(x => total += x.selectedQuantity * x.price);
+        console.log(total);
+
         const orderItems = data.map(x => { 
             return {
                 product: {...x}, 
@@ -173,7 +173,7 @@ export default function OrderCreate() {
             paymentService.pay({
                 paymentMethod: 'Cash',
                 order: {
-                    orderId: response.data.orderId
+                    orderId: response.data
                 }
             }).then(response => {
                 alert("Successfully ordered");
@@ -187,6 +187,9 @@ export default function OrderCreate() {
 
         });
     }
+
+    let total = 0;
+    data.forEach(x => total += x.selectedQuantity * x.price);
 
     return (
         <>

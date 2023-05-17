@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.StripePayment;
+import com.example.demo.repository.StripePaymentRepository;
+import com.google.gson.Gson;
 import com.stripe.exception.SignatureVerificationException;
-import com.stripe.model.Event;
-import com.stripe.model.EventDataObjectDeserializer;
-import com.stripe.model.StripeObject;
+import com.stripe.model.*;
 import com.stripe.net.Webhook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("webhook")
 public class WebhookController {
 
-    @Value("${stripe.key}")
+    private static final Gson gson = new Gson();
+    @Value("${stripe.webhook_key}")
     private String stripeKey;
+
+    @Autowired
+    private StripePaymentRepository stripePaymentRepository;
 
     @PostMapping
     public ResponseEntity<String> webhook(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) {
@@ -39,8 +45,18 @@ public class WebhookController {
         }
 
         switch (event.getType()) {
-            case "payment_intent.succeeded":
-                // ...
+            case "payment_intent.succeeded" :
+            case "charge.succeeded":
+                try {
+                    var charge = (Charge)stripeObject;
+                    var stripePayment = new StripePayment();
+                    stripePayment.setAmount(charge.getAmountCaptured() / 100);
+                    stripePayment.setCurrency(charge.getCurrency());
+                    stripePayment.setUserEmail(charge.getReceiptEmail());
+                    stripePaymentRepository.save(stripePayment);
+                } catch (Exception e) {
+
+                }
                 break;
             case "payment_method.attached":
                 // ...

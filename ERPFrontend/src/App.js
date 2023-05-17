@@ -29,6 +29,7 @@ import OrderCreate from "./pages/Order/OrderCreate";
 import OrderList from "./pages/Order/OrdersList";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import PaymentList from "./pages/Payment/PaymentList";
 
 function App() {
   return (
@@ -65,6 +66,8 @@ function App() {
 
         <Route path="/order/create" exact element={<OrderCreate />} />
         <Route path="/orders" exact element={<OrderList />} />
+
+        <Route path="/payments" exact element={<PaymentList />} />
 
         <Route path="/login" exact element={<Login />} />
         <Route path="/register" exact element={<Register />} />
