@@ -1,14 +1,19 @@
 import http from "../http-common";
 
 class PaymentService {
-  getAll(data, tokenId, value) {
+
+  pay(data, tokenId, value) {
     const headers = {};
     if (tokenId) {
         headers.token = tokenId;
         headers.amount = value;
     }
-    return http.get("/stripe/payment", data,
+    return http.post("/payment/payment", data,
      { headers });
+  }
+
+  getAll(data, tokenId, value) {
+    return http.get("/stripe/payment");
   }
 
 }

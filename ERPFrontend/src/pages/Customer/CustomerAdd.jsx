@@ -65,7 +65,7 @@ export default function CustomerAdd() {
 
     return (
         <>
-            <h1>New staff</h1>
+            <h1>New customer</h1>
 
             <div className="w-50 m-auto">
                 <form>

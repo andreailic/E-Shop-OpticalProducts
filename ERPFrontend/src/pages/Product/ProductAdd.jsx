@@ -84,7 +84,7 @@ export default function ProductAdd() {
                     </div>
 
                     <div className="form-group mt-2">
-                        <label>Price</label>
+                        <label>Lager</label>
                         <input type="number" ref={lagerRef} className="form-control" name="lager" />
                     </div>
 

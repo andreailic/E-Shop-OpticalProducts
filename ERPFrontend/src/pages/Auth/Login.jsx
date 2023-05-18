@@ -36,8 +36,8 @@ function Login(props) {
     }
 
     return (
-        <div className="form-signin-container text-center h-75 w-50">
-            <form className="form-signin" onSubmit={event => handleLogin(event)}>
+        <div className="form-signin-container text-center h-75 w-50 m-auto">
+            <form className="form-signin text-center w-100" onSubmit={event => handleLogin(event)}>
                 <h1 className="h3 mb-3 font-weight-normal">Login</h1>
                 <label htmlFor="text" className="sr-only">Username</label>
                 <input type="text" id="inputEmail" className="form-control" placeholder="Username" required
@@ -46,7 +46,7 @@ function Login(props) {
                 <input type="password" id="inputPassword" className="form-control" placeholder="Password"
                        required name="password" onChange={(event => handleChange(event))} />
                 {showError?<label className="text-danger">Username or password is not correct</label>:null}
-                <button className="btn btn-lg btn-primary btn-block w-50" type="submit">Login</button>
+                <button className="btn btn-lg btn-primary btn-block w-50 m-auto" type="submit">Login</button>
             </form>
         </div>
     )

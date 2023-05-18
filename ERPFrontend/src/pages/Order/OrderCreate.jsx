@@ -153,12 +153,14 @@ export default function OrderCreate() {
     function confirmOrder() {
         let total = 0;
         data.forEach(x => total += x.selectedQuantity * x.price);
-        console.log(total);
 
-        const orderItems = data.map(x => { 
-            return {
-                product: {...x}, 
-                quantity: x.selectedQuantity,
+        const orderItems = [];
+        data.forEach(x => { 
+            if (x.selectedQuantity != 0) {
+                orderItems.push( {
+                    product: {...x}, 
+                    quantity: x.selectedQuantity,
+                })
             }
         });
         
@@ -184,7 +186,7 @@ export default function OrderCreate() {
             
         })
         .catch(err => {
-
+            console.log(err)
         });
     }
 
