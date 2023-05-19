@@ -13,3 +13,10 @@
   max-width: 300px;
   margin: auto;
 }
+
+body {
+  background-image: url('../public/backgr.jpg');
+  background-size: 'cover';
+  background-position: 'center';
+  background-repeat: 'no-repeat';
+}

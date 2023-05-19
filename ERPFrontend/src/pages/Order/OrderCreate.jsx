@@ -196,6 +196,11 @@ export default function OrderCreate() {
     return (
         <>
 
+            <div className="text-left m-5">
+                <img src='/shopping-cart.png' alt='login' width={100} height={100} />
+            
+            </div>
+
             <div className="col-md-12">
             <DataTable
                     title="Choose products to buy"

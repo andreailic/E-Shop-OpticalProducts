@@ -30,6 +30,7 @@ import OrderList from "./pages/Order/OrdersList";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import PaymentList from "./pages/Payment/PaymentList";
+import Home from "./pages/Home/Home";
 
 function App() {
   return (
@@ -72,7 +73,7 @@ function App() {
         <Route path="/login" exact element={<Login />} />
         <Route path="/register" exact element={<Register />} />
 
-        <Route path="/" exact element={<ProductList />} />
+        <Route path="/" exact element={<Home />} />
         
         <Route path="*" element={<><h1>Not found</h1></>} />
       </Routes>

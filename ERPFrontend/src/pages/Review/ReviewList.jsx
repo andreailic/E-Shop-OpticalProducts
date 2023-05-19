@@ -91,9 +91,17 @@ export default function ReviewList() {
 
     return (
         <>
+
+            <div className="text-left m-5">
+                <img src='/rating.png' alt='login' width={100} height={100} />
+            
+            </div>
+
             {userRole && <div>
-                <Link to="/review/add" className="btn btn-success">New review</Link>
+                <Link to="/review/add" className="btn btn-success m-5">New review</Link>
             </div>}
+
+
 
             <div className="col-md-12">
             <DataTable

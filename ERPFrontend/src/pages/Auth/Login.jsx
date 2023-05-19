@@ -37,6 +37,8 @@ function Login(props) {
 
     return (
         <div className="form-signin-container text-center h-75 w-50 m-auto">
+
+            <img src='/login.png' alt='login' width={200} height={200} />
             <form className="form-signin text-center w-100" onSubmit={event => handleLogin(event)}>
                 <h1 className="h3 mb-3 font-weight-normal">Login</h1>
                 <label htmlFor="text" className="sr-only">Username</label>

@@ -65,9 +65,12 @@ export default function Register() {
 
     return (
         <>
-            <h1>Register</h1>
+            <h1 className="text-center">Register</h1>
 
-            <div className="w-50 m-auto">
+
+            <div className="w-50 m-auto text-center">
+                <img  src='/welcome.png' alt='login' width={200} height={200} />
+
                 <form>
                     <div className="form-group mt-2">
                         <label>Name</label>
