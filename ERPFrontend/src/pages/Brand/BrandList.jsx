@@ -21,13 +21,13 @@ export default function BrandList() {
             sortable: true,
         },
         {
-            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <Link className="btn btn-warning" to={"/brands/edit/" + row.brandId}>Edit</Link>},
+            cell:(row) => userRole && userRole === "ROLE_STAFF" && <Link className="btn btn-warning" to={"/brands/edit/" + row.brandId}>Edit</Link>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
         {
-            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.brandId)} id={row.brandId}>Delete</button> },
+            cell:(row) => userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.brandId)} id={row.brandId}>Delete</button> ,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,

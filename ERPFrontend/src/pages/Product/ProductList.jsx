@@ -46,13 +46,13 @@ export default function ProductList() {
             sortable: true,
         },
         {
-            cell:(row) => {userRole && userRole === "ROLE_STAFF" &&<Link className="btn btn-warning" to={"/product/edit/" + row.productId}>Edit</Link>},
+            cell:(row) => userRole && userRole === "ROLE_STAFF" &&<Link className="btn btn-warning" to={"/product/edit/" + row.productId}>Edit</Link>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
         {
-            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.productId)} id={row.productId}>Delete</button>},
+            cell:(row) => userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.productId)} id={row.productId}>Delete</button>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
