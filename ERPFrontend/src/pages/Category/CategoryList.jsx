@@ -21,13 +21,13 @@ export default function CategoryList() {
             sortable: true,
         },
         {
-            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <Link className="btn btn-warning" to={"/category/edit/" + row.categoryId}>Edit</Link>},
+            cell:(row) => userRole && userRole === "ROLE_STAFF" && <Link className="btn btn-warning" to={"/category/edit/" + row.categoryId}>Edit</Link>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
         {
-            cell:(row) => {userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.categoryId)} id={row.categoryId}>Delete</button>},
+            cell:(row) => userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.categoryId)} id={row.categoryId}>Delete</button>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
