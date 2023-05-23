@@ -53,7 +53,7 @@ export default function AddressEdit() {
 
     return (
         <>
-            <h1>Edit brand</h1>
+            <h1>Edit address</h1>
 
             <div className="w-50 m-auto">
                 <form>

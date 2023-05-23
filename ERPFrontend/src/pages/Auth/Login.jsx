@@ -40,7 +40,7 @@ function Login(props) {
 
             <img src='/login.png' alt='login' width={200} height={200} />
             <form className="form-signin text-center w-100" onSubmit={event => handleLogin(event)}>
-                <h1 className="h3 mb-3 font-weight-normal">Login</h1>
+                <h1 className="h3 mb-3 font-weight-bold">Login</h1>
                 <label htmlFor="text" className="sr-only">Username</label>
                 <input type="text" id="inputEmail" className="form-control" placeholder="Username" required
                        autoFocus name="username" onChange={(event => handleChange(event))}   />

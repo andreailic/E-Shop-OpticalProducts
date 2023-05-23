@@ -6,7 +6,7 @@ export default function Navbar() {
 
     function logout() {
         localStorage.clear();
-        window.location.href = "";
+        window.location.href = "/";
     }
 
     return (
@@ -25,7 +25,7 @@ export default function Navbar() {
                         <NavLink className="nav-link " to={"/brands"} >Brands</NavLink>
                     </li>}
 
-                    {userRole && <li className="nav-item">
+                    {userRole && userRole === "ROLE_STAFF" && <li className="nav-item">
                         <NavLink className="nav-link " to={"/address"} >Addresses</NavLink>
                     </li>}
 

@@ -13,7 +13,7 @@ export default function Home() {
     
       const titleStyle = {
         textAlign: 'center',
-        color: '#17a2b8',
+        color: 'yellow',
         fontSize: '5rem',
       };
     

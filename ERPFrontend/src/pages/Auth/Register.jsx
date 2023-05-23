@@ -65,7 +65,7 @@ export default function Register() {
 
     return (
         <>
-            <h1 className="text-center">Register</h1>
+            <h1 className="text-center font-weight-bold">Register</h1>
 
 
             <div className="w-50 m-auto text-center">

@@ -37,7 +37,7 @@ export default function ProductList() {
         },
         {
             name: 'Description',
-            selector: row => row.description,
+            selector: row => <div>{row.description}</div>,
             sortable: true,
         },
         {

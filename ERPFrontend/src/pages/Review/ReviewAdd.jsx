@@ -32,6 +32,11 @@ export default function ReviewAdd() {
             return;
         }
 
+        if (rating < 0 || rating > 5) {
+            alert("Wrong value entered for rating");
+            return;
+        }
+
         reviewService.create({
             product,
             rating,
@@ -68,7 +73,7 @@ export default function ReviewAdd() {
 
                         <div className="form-group mt-2">
                             <label>Rating</label>
-                            <input type="number" ref={ratingRef} className="form-control" name="price" />
+                            <input type="number" ref={ratingRef} min={0} max={5} className="form-control" name="price" />
                         </div>
 
                         <div className="form-group mt-2">

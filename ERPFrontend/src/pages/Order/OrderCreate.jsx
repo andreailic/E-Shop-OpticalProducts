@@ -85,7 +85,11 @@ export default function OrderCreate() {
         setData(state => {
             state.forEach(x => {
                 if (x.productId === +id) {
-                    x.selectedQuantity++;
+                    if (x.selectedQuantity + 1 > x.lager) {
+                        alert('You cannot add more items than availabile in lager')
+                    } else {
+                       x.selectedQuantity++;
+                    }
                 }
             })
             return state;
