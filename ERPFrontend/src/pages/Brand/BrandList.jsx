@@ -81,7 +81,11 @@ export default function BrandList() {
             </div>
 }
 
-            <div className="col-md-12">
+            <div className="col-md-12" >
+            <div className="image-container" style={{ display: 'flex', marginLeft: '75px' }}>
+                <img src='/brendovi.png' alt='login' width={500} height={100} style={{ marginRight: '10px' }}/>
+                <img src='/brendovi2.png' alt='login' width={500} height={100} style={{ marginLeft: '10px' }}/>
+            </div>
             <DataTable
                     title="Brands List"
                     columns={columns}

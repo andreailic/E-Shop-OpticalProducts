@@ -84,11 +84,14 @@ export default function AddressList() {
     return (
         <>
             {userRole && userRole === "ROLE_STAFF" && <div>
-                <Link to="/address/add" className="btn btn-success">New address</Link>
-            </div>
-            }
+                            <Link to="/address/add" className="btn btn-success">New address</Link>
+                        
+                </div>}
 
-            <div className="col-md-12">
+           <div className="text-center m-5">
+                <img src='/mapa.jpg' alt='login' width={400} height={130} style={{ marginTop: '5px' }}/>
+            
+            
             <DataTable
                     title="Address List"
                     columns={columns}
@@ -99,7 +102,7 @@ export default function AddressList() {
                     selectableRows
                     persistTableHead
                 />
-        </div>  
+         </div>
 
         </>
     )
