@@ -42,7 +42,7 @@ export default function ReviewAdd() {
             rating,
             comment,
             user: {
-                userId: 8
+                userId: localStorage.getItem('userId')
             }
         })
         .then(data => {

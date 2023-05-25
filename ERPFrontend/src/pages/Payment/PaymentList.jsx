@@ -13,8 +13,8 @@ export default function PaymentList() {
             sortable: true,
         },
         {
-            name: 'Email',
-            selector: row => row.userName,
+            name: 'Customer',
+            selector: row => row.userEmail,
             sortable: true,
         },
         {

@@ -52,7 +52,7 @@ public class WebhookController {
                     var stripePayment = new StripePayment();
                     stripePayment.setAmount(charge.getAmountCaptured() / 100);
                     stripePayment.setCurrency(charge.getCurrency());
-                    stripePayment.setUserEmail(charge.getReceiptEmail());
+                    stripePayment.setUserEmail(charge.getCalculatedStatementDescriptor());
                     stripePaymentRepository.save(stripePayment);
                 } catch (Exception e) {
 

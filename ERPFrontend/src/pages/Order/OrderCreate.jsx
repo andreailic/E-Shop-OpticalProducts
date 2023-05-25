@@ -35,7 +35,15 @@ export default function OrderCreate() {
             name: 'Selected quantity',
             selector: row => row.selectedQuantity,
             sortable: true,
-        },
+            customFilterValue: (value, row) => row.selectedQuantity > 0 ? 'greaterThanZero' : '',
+            customFilterMethod: (filter, row) => {
+              if (filter === 'greaterThanZero') {
+                return row.selectedQuantity > 0;
+              }
+              return true; // Prikazuje sve redove ako nije primenjen filter 'greaterThanZero'
+            },
+          },
+          
         {
             cell:(row) => <button className="btn btn-success" onClick={() => addToBasket(row.productId)} id={"Add" + row.productId}>Add</button>,
             ignoreRowClick: true,
@@ -119,13 +127,16 @@ export default function OrderCreate() {
            
         let total = 0;
         data.forEach(x => total += x.selectedQuantity * x.price);
-        const orderItems = data.map(x => { 
-            return {
-                product: {...x}, 
-                quantity: x.selectedQuantity,
+        
+        const orderItems = [];
+        data.forEach(x => { 
+            if (x.selectedQuantity != 0) {
+                orderItems.push( {
+                    product: {...x}, 
+                    quantity: x.selectedQuantity,
+                })
             }
         });
-        
         orderService.create({
             orderItems,
             user: {

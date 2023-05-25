@@ -25,7 +25,7 @@ export default function StaffList() {
         },
         {
             name: 'Email',
-            selector: row => row.user.surname,
+            selector: row => row.user.email,
             sortable: true,
         },
         {
