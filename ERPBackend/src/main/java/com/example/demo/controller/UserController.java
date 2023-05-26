@@ -47,24 +47,30 @@ public class UserController {
 	     }
 	 }
 
-	 @PostMapping("/user")
-		public ResponseEntity<User> postUser(@RequestBody User user){
-			if (!userRepository.existsById(user.getUserId())) {
-
-				user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-				try {
-					userRepository.save(user);
-				} catch (Exception e) {
-					e.printStackTrace();
-					return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
-				}
-				return new ResponseEntity<User>(HttpStatus.OK);
+	@PostMapping("/user")
+	public ResponseEntity<User> postUser(@RequestBody User user) {
+		if (!userRepository.existsById(user.getUserId())) {
+			if (userRepository.existsByUsername(user.getUsername())) {
+				return new ResponseEntity<User>(HttpStatus.CONFLICT);
 			}
-			return new ResponseEntity<User>(HttpStatus.CONFLICT);
+
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+			try {
+				userRepository.save(user);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
+			return new ResponseEntity<User>(HttpStatus.OK);
 		}
-		
-		@PutMapping("/user")
+
+		return new ResponseEntity<User>(HttpStatus.CONFLICT);
+	}
+
+
+	@PutMapping("/user")
 		public ResponseEntity<User> putUser(@RequestBody User user) {
 			if (!userRepository.existsById(user.getUserId())){
 				return new ResponseEntity<User>(HttpStatus.NO_CONTENT);

@@ -71,8 +71,8 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.GET, "/review/review/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/review/review").hasRole("CUSTOMER")
-                .requestMatchers(HttpMethod.PUT, "/review/review/**").hasRole("STAFF")
-                .requestMatchers(HttpMethod.DELETE, "/review/review/**").hasRole("STAFF")
+                .requestMatchers(HttpMethod.PUT, "/review/review/**").hasRole("CUSTOMER")
+                .requestMatchers(HttpMethod.DELETE, "/review/review/**").hasRole("CUSTOMER")
 
                 .requestMatchers(HttpMethod.GET, "/customer/customer/**").hasRole("STAFF")
                 .requestMatchers(HttpMethod.POST, "/customer/customer").permitAll()

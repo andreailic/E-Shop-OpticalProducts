@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,13 +22,20 @@ public class User implements UserDetails {
 	@SequenceGenerator(name="USER_ID_GENERATOR", sequenceName="USERS_SEQ", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USER_ID_GENERATOR")
 	private int userId;
+
+	@NotEmpty(message = "Name is required")
 	private String name;
+
+	@NotEmpty(message = "Surname is required")
 	private String surname;
 
+	@Email(message = "Nevažeća email adresa")
 	private String email;
 	@Column(name = "user_name")
 	private String username;
 
+	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$",
+			message = "Lozinka mora sadržavati najmanje 6 karaktera, jedno veliko slovo i jedan broj")
 	private String password;
 
 	@Enumerated(EnumType.STRING)
