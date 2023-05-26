@@ -36,13 +36,14 @@ export default function ReviewList() {
             sortable: true,
         },
         {
-            cell:(row) => userRole && userRole === "ROLE_STAFF" && <Link className="btn btn-warning" to={"/review/edit/" + row.reviewId}>Edit</Link>,
+            cell:(row) => userRole && (userRole === "ROLE_CUSTOMER" && row.user.userId === +localStorage.getItem('userId')) && <Link className="btn btn-warning" to={"/review/edit/" + row.reviewId}>Edit</Link>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
+
         {
-            cell:(row) => userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.reviewId)} id={row.reviewId}>Delete</button>,
+            cell:(row) => userRole && (userRole === "ROLE_CUSTOMER" && row.user.userId === +localStorage.getItem('userId')) && <button className="btn btn-danger" onClick={() => deleteRecord(row.reviewId)} id={row.reviewId}>Delete</button>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
