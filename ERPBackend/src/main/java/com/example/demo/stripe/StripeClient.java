@@ -26,12 +26,15 @@ public class StripeClient {
     private Customer getCustomer(String id) throws Exception {
         return Customer.retrieve(id);
     }
-    public Charge chargeNewCard(String token, double amount) throws Exception {
+    public Charge chargeNewCard(String token, double amount, String userId) throws Exception {
         Stripe.apiKey = stripeKey;
         Map<String, Object> chargeParams = new HashMap<String, Object>();
         chargeParams.put("amount", (int)(amount * 100));
         chargeParams.put("currency", "USD");
         chargeParams.put("source", token);
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("user_id", userId);
+        chargeParams.put("metadata", metadata);
         Charge charge = Charge.create(chargeParams);
         return charge;
     }

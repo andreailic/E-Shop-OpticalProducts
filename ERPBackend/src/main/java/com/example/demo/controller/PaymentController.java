@@ -47,13 +47,14 @@ public class PaymentController {
     @PostMapping("/payment")
 	public ResponseEntity<Payment> createPayment(@RequestBody Payment payment,
 												 @RequestHeader(value="token", required = false) String token,
-												 @RequestHeader(value="amount", required = false) Double amount) {
+												 @RequestHeader(value="amount", required = false) Double amount,
+												 @RequestHeader(value="userId", required = false) String userId) {
 		if(paymentRepository.existsById(payment.getPaymentId())) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			if (token != null) {
-				var charge = this.stripeClient.chargeNewCard(token, amount);
+				var charge = this.stripeClient.chargeNewCard(token, amount, userId);
 			}
 			paymentRepository.save(payment);
 			return new ResponseEntity<Payment>(HttpStatus.OK);

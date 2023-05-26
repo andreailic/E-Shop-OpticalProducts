@@ -2,11 +2,12 @@ import http from "../http-common";
 
 class PaymentService {
 
-  pay(data, tokenId, value) {
+  pay(data, tokenId, value, userId) {
     const headers = {};
     if (tokenId) {
         headers.token = tokenId;
         headers.amount = value;
+        headers.userId = userId;
     }
     return http.post("/payment/payment", data,
      { headers });

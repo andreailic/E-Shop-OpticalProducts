@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.StripePayment;
 import com.example.demo.repository.StripePaymentRepository;
+import com.example.demo.repository.UserRepository;
 import com.google.gson.Gson;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.*;
@@ -22,6 +23,9 @@ public class WebhookController {
 
     @Autowired
     private StripePaymentRepository stripePaymentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping
     public ResponseEntity<String> webhook(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) {
@@ -52,7 +56,9 @@ public class WebhookController {
                     var stripePayment = new StripePayment();
                     stripePayment.setAmount(charge.getAmountCaptured() / 100);
                     stripePayment.setCurrency(charge.getCurrency());
-                    stripePayment.setUserEmail(charge.getCalculatedStatementDescriptor());
+                    String userId = charge.getMetadata().get("user_id");
+                    var user = userRepository.findById(Integer.parseInt(userId)).get();
+                    stripePayment.setUserEmail(user.getEmail());
                     stripePaymentRepository.save(stripePayment);
                 } catch (Exception e) {
 

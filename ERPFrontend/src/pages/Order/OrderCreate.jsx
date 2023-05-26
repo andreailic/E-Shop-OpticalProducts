@@ -150,7 +150,7 @@ export default function OrderCreate() {
                 order: {
                     orderId: response.data
                 }
-            }, token.id, total).then(response => {
+            }, token.id, total, localStorage.getItem('userId')).then(response => {
                 alert("Successfully ordered");
                 navigate("/product");    
             }).catch(error => {
