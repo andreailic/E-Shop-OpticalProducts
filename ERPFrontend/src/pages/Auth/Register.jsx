@@ -25,6 +25,11 @@ export default function Register() {
         fetchData();
     }, []);
 
+    const validateEmail = (email) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+      };
+
     function save() {
         
         const name = nameRef.current.value;
@@ -40,6 +45,17 @@ export default function Register() {
             setError(true);
             return;
         }
+        
+        if (!validateEmail(email))
+         {
+            alert("Bad email format");
+            return;
+         }
+        
+         if (password.length < 8) {
+            alert("Password must contain at least 8 characters");
+            return;
+         }
 
         customerService.create({
             user: {

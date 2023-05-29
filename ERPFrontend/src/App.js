@@ -31,6 +31,7 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import PaymentList from "./pages/Payment/PaymentList";
 import Home from "./pages/Home/Home";
+import ProductOverview from "./pages/Product/ProductOverview";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
 
         <Route path="/product/edit/:id" exact element={<ProductEdit />} />
         <Route path="/product/add" exact element={<ProductAdd />} />
+        <Route path="/product/overview/:id" exact element={<ProductOverview />} />
         <Route path="/product" exact element={<ProductList />} />
 
         <Route path="/review/edit/:id" exact element={<ReviewEdit />} />  

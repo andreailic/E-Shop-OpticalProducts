@@ -36,14 +36,7 @@ export default function ReviewList() {
             sortable: true,
         },
         {
-            cell:(row) => userRole && (userRole === "ROLE_CUSTOMER" && row.user.userId === +localStorage.getItem('userId')) && <Link className="btn btn-warning" to={"/review/edit/" + row.reviewId}>Edit</Link>,
-            ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
-        },
-
-        {
-            cell:(row) => userRole && (userRole === "ROLE_CUSTOMER" && row.user.userId === +localStorage.getItem('userId')) && <button className="btn btn-danger" onClick={() => deleteRecord(row.reviewId)} id={row.reviewId}>Delete</button>,
+            cell:(row) => userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.reviewId)} id={row.reviewId}>Delete</button>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -97,12 +90,6 @@ export default function ReviewList() {
                 <img src='/rating.png' alt='login' width={100} height={100} />
             
             </div>
-
-            {userRole && <div>
-                <Link to="/review/add" className="btn btn-success m-5">New review</Link>
-            </div>}
-
-
 
             <div className="col-md-12">
             <DataTable

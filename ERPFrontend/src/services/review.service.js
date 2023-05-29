@@ -9,6 +9,10 @@ class ReviewService {
     return http.get(`/review/review/${id}`);
   }
 
+  getByProductId(id) {
+    return http.get(`/review/review/product/${id}`);
+  }
+
   create(data) {
     return http.post("/review/review", data);
   }

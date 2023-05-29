@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -30,8 +31,9 @@ public class User implements UserDetails {
 	private String surname;
 
 	@Email(message = "Nevažeća email adresa")
+	@Column(unique = true)
 	private String email;
-	@Column(name = "user_name")
+	@Column(name = "user_name", unique = true)
 	private String username;
 
 	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$",
@@ -40,8 +42,10 @@ public class User implements UserDetails {
 
 	@Enumerated(EnumType.STRING)
 	private ERole role;
-	
-	
+
+	@OneToOne(mappedBy = "user")
+	@JsonIgnore
+	private Customer customer;
 	
 	public User() {
 		
@@ -173,6 +177,12 @@ public class User implements UserDetails {
 	public void setRole(ERole role) {
 		this.role = role;
 	}
-	
-	
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 }

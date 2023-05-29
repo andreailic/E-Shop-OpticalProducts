@@ -69,7 +69,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/product/product/**").hasRole("STAFF")
                 .requestMatchers(HttpMethod.DELETE, "/product/product/**").hasRole("STAFF")
 
-                .requestMatchers(HttpMethod.GET, "/review/review/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/review/review/**").hasRole("STAFF")
                 .requestMatchers(HttpMethod.POST, "/review/review").hasRole("CUSTOMER")
                 .requestMatchers(HttpMethod.PUT, "/review/review/**").hasRole("CUSTOMER")
                 .requestMatchers(HttpMethod.DELETE, "/review/review/**").hasRole("CUSTOMER")

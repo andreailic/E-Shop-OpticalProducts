@@ -59,6 +59,7 @@ public class WebhookController {
                     String userId = charge.getMetadata().get("user_id");
                     var user = userRepository.findById(Integer.parseInt(userId)).get();
                     stripePayment.setUserEmail(user.getEmail());
+                    stripePayment.setUserAddress(user.getCustomer().getAddress().getStreet() + ", " + user.getCustomer().getAddress().getCity());
                     stripePaymentRepository.save(stripePayment);
                 } catch (Exception e) {
 

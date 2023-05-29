@@ -37,9 +37,10 @@ export default function Navbar() {
                         <NavLink className="nav-link " to={"/product"} >Products</NavLink>
                     </li>
 
-                    <li className="nav-item">
+                    {userRole && userRole === "ROLE_STAFF" && <li className="nav-item">
                         <NavLink className="nav-link " to={"/review"} >Reviews</NavLink>
                     </li>
+                    }
 
                     {userRole && userRole === "ROLE_STAFF" &&
                     <li className="nav-item">
@@ -55,7 +56,7 @@ export default function Navbar() {
 
                     {userRole && userRole === "ROLE_CUSTOMER" &&
                     <li className="nav-item">
-                        <NavLink className="nav-link " to={"/order/create"} >New order</NavLink>
+                        <NavLink className="nav-link " to={"/order/create"} >Cart</NavLink>
                     </li>
                     }
 

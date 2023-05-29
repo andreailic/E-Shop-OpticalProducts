@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import productService from "../../services/product.service";
+import cartService from "../../services/cart.service";
 
 export default function ProductList() {
   const userRole = localStorage.getItem("role");
@@ -65,6 +66,28 @@ export default function ProductList() {
       allowOverflow: true,
       button: true,
     },
+    {
+      cell: (row) =>
+        userRole === "ROLE_CUSTOMER" && (
+          <button className="btn btn-success" onClick={() => addToCart(row.productId)} id={"product" + row.productId}>
+          To Cart
+        </button>
+        ),
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+    },
+    {
+      cell: (row) =>
+        userRole === "ROLE_CUSTOMER" && (
+          <Link className="btn btn-warning" to={`/product/overview/${row.productId}`}>
+            Details
+          </Link>
+        ),
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+    },
   ];
 
   // State
@@ -92,6 +115,12 @@ export default function ProductList() {
       )
     );
   }, [filterText, maxPrice, brandFilter]);
+
+  function addToCart(productId) {
+    const product = data.find(x => x.productId === productId);
+    cartService.addToCart(product);
+    alert("Uspesno dodat proizvod!")
+  }
 
   const searchMemo = useMemo(() => {
     const handleClear = () => {

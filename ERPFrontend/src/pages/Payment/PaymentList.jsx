@@ -18,6 +18,11 @@ export default function PaymentList() {
             sortable: true,
         },
         {
+            name: 'Customer Address',
+            selector: row => row.userAddress,
+            sortable: true,
+        },
+        {
             name: 'Currency',
             selector: row => row.currency,
             sortable: true,

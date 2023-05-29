@@ -11,6 +11,7 @@ public class StripePayment {
     private double amount;
     private String currency;
     private String userEmail;
+    private String userAddress;
 
     public int getId() {
         return id;
@@ -42,5 +43,13 @@ public class StripePayment {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public String getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
     }
 }

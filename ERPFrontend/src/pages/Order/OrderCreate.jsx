@@ -2,13 +2,12 @@ import { useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import FilterComponent from "../../components/Filter/FilterComponent";
 import DataTable from "react-data-table-component";
-import productService from "../../services/product.service";
 import orderService from "../../services/order.service";
 import StripeCheckout from "react-stripe-checkout";
 import paymentService from "../../services/payment.service";
+import cartService from "../../services/cart.service";
 
 export default function OrderCreate() {
-
     //Const 
     const columns = [
         {
@@ -43,19 +42,6 @@ export default function OrderCreate() {
               return true; // Prikazuje sve redove ako nije primenjen filter 'greaterThanZero'
             },
           },
-          
-        {
-            cell:(row) => <button className="btn btn-success" onClick={() => addToBasket(row.productId)} id={"Add" + row.productId}>Add</button>,
-            ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
-        },
-        {
-            cell:(row) => <button className="btn btn-danger" onClick={() => removeProduct(row.productId)} id={"Delete" + row.productId}>Remove</button>,
-            ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
-        },
       ];
 
     // States
@@ -66,12 +52,14 @@ export default function OrderCreate() {
     const navigate = useNavigate();
 
     useEffect(() => {
-       productService.getAll().then(response => {
-        const retrievedData = response.data.map(x => {return {...x, selectedQuantity: 0}});
-        setData(retrievedData);
-        setFilteredData(retrievedData);
-       })
+       const cart = cartService.getCartItems();
+        setData(cart);
+        
     }, []);
+
+    useEffect(() => {
+        setFilteredData(data);
+     }, [data]);
 
     useEffect(() => {
         setFilteredData(data.filter(item => item.name.toLowerCase().includes(filterText.toLowerCase())));
@@ -88,40 +76,6 @@ export default function OrderCreate() {
             <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
         );
     }, [filterText]);
-
-    function addToBasket(id) {
-        setData(state => {
-            state.forEach(x => {
-                if (x.productId === +id) {
-                    if (x.selectedQuantity + 1 > x.lager) {
-                        alert('You cannot add more items than availabile in lager')
-                    } else {
-                       x.selectedQuantity++;
-                    }
-                }
-            })
-            return state;
-        });
-
-        setFilteredData(
-            [...filteredData]
-        )
-    }
-
-    function removeProduct(id) {
-        setData(state => {
-            state.forEach(x => {
-                if (x.productId === +id) {
-                    x.selectedQuantity = 0;
-                }
-            })
-            return state;
-        });
-
-        setFilteredData(
-            [...filteredData]
-        )
-    }
 
     async function handleToken(token) {
            
@@ -152,6 +106,7 @@ export default function OrderCreate() {
                 }
             }, token.id, total, localStorage.getItem('userId')).then(response => {
                 alert("Successfully ordered");
+                cartService.clearStorage();
                 navigate("/product");    
             }).catch(error => {
                 console.log(error);
@@ -171,7 +126,7 @@ export default function OrderCreate() {
 
         const orderItems = [];
         data.forEach(x => { 
-            if (x.selectedQuantity != 0) {
+            if (x.selectedQuantity !== 0) {
                 orderItems.push( {
                     product: {...x}, 
                     quantity: x.selectedQuantity,
@@ -194,6 +149,7 @@ export default function OrderCreate() {
                 }
             }).then(response => {
                 alert("Successfully ordered");
+                cartService.clearStorage();
                 navigate("/product");    
             }).catch(error => {
                 console.log(error);
@@ -218,7 +174,7 @@ export default function OrderCreate() {
 
             <div className="col-md-12">
             <DataTable
-                    title="Choose products to buy"
+                    title="Cart"
                     columns={columns}
                     data={filteredData}
                     pagination
