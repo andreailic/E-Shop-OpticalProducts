@@ -35,12 +35,7 @@ export default function ReviewList() {
             selector: row => row.user.name + " " + row.user.surname,
             sortable: true,
         },
-        {
-            cell:(row) => userRole && userRole === "ROLE_STAFF" && <button className="btn btn-danger" onClick={() => deleteRecord(row.reviewId)} id={row.reviewId}>Delete</button>,
-            ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
-        },
+        
       ];
 
     // States
@@ -72,16 +67,6 @@ export default function ReviewList() {
         );
     }, [filterText]);
 
-    function deleteRecord(id) {
-        reviewService.delete(id).then(response => {
-            const newData = data.filter(x => x.reviewId !== id);
-            const newFilteredData = filteredData.filter(x => x.reviewId !== id);
-            setData(newData);
-            setFilteredData(newFilteredData);
-        }).catch(err => {
-            console.log(err);
-        });
-    }
 
     return (
         <>
