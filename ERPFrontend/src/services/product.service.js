@@ -10,7 +10,12 @@ class ProductService {
   }
 
   create(data) {
-    return http.post("/product/product", data);
+    return http.post("/product/product", data, {
+       headers: {
+        'Content-Type': 'multipart/form-data',
+        'X-HED': 'KR'
+      }
+    });
   }
 
   update(id, data) {

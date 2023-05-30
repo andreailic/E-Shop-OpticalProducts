@@ -30,6 +30,7 @@ public class Product implements Serializable {
 	private int price;
 	private String description;
 	private int lager;
+	private String image;
 
 	@ManyToOne()
 	@JoinColumn(name="brand_id")
@@ -114,6 +115,11 @@ public class Product implements Serializable {
 		this.brand = brand;
 	}
 
+	public String getImage() {
+		return image;
+	}
 
-	
+	public void setImage(String image) {
+		this.image = image;
+	}
 }

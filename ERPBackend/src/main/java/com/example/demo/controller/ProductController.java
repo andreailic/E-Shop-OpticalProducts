@@ -1,25 +1,29 @@
 package com.example.demo.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
+import com.example.demo.model.Brand;
+import com.example.demo.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin
 @RestController
@@ -28,6 +32,9 @@ public class ProductController {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private ResourceLoader resourceLoader;
 	
 	  @GetMapping("/product")
 	    public Collection<Product> getAllProduct(){
@@ -51,7 +58,45 @@ public class ProductController {
 		}
 	  
 	  @PostMapping("/product")
-		public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+		public ResponseEntity<Product> createProduct(@RequestParam("image") MultipartFile image,
+													 @RequestParam String name,
+													 @RequestParam String  description,
+													 @RequestParam Integer price,
+													 @RequestParam Integer lager,
+													 @RequestParam Integer categoryId,
+													 @RequestParam Integer brandId
+													 ) throws IOException {
+
+
+		  // Get the absolute path to the upload directory
+		  String uploadPath = System.getProperty("user.dir") + "/" + "src/main/resources/static/uploads/";
+
+		  // Create the upload directory if it doesn't exist
+		  File directory = new File(uploadPath);
+		  if (!directory.exists()) {
+			  directory.mkdirs();
+		  }
+
+		  // Save the image file in the upload directory
+		  String fileName = StringUtils.cleanPath(UUID.randomUUID().toString() + "_" + image.getOriginalFilename());
+		  Path filePath = Paths.get(uploadPath + fileName);
+		  Files.copy(image.getInputStream(),
+				  filePath, StandardCopyOption.REPLACE_EXISTING);
+
+		  Product product = new Product();
+		  product.setName(name);
+		  product.setDescription(description);
+		  product.setPrice(price);
+		  product.setLager(lager);
+		  product.setImage(fileName);
+
+		  Category category = new Category();
+		  category.setCategoryId(categoryId);
+		  Brand brand = new Brand();
+		  brand.setBrandId(brandId);
+
+		  product.setBrand(brand);
+		  product.setCategory(category);
 			if(!productRepository.existsById(product.getProductId())) {
 				productRepository.save(product);
 				return new ResponseEntity<Product>(HttpStatus.OK);

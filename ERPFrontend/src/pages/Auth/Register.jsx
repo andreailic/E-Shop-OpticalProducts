@@ -30,6 +30,11 @@ export default function Register() {
         return regex.test(email);
       };
 
+    const validatePhone = (phone) => {
+        const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+        return regex.test(phone);
+    }
+
     function save() {
         
         const name = nameRef.current.value;
@@ -49,6 +54,11 @@ export default function Register() {
         if (!validateEmail(email))
          {
             alert("Bad email format");
+            return;
+         }
+
+         if (!validatePhone(phone)) {
+            alert("Bad phone format");
             return;
          }
         

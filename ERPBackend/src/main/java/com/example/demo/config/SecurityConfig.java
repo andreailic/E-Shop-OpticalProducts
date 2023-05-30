@@ -33,6 +33,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(
                         "/auth/**",
+                        "/static/**",
+                        "/uploads/**",
                         "webhook/**",
                         "/swagger-resources",
                         "/swagger-resources/**",

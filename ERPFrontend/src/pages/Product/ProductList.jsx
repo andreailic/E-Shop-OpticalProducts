@@ -10,6 +10,14 @@ export default function ProductList() {
   // Columns
   const columns = [
     {
+      cell: (row) =>
+          <img src={"http://localhost:8083/uploads/" + row.image} alt="Product" style={{width: 100, height: 100}}  />
+        ,
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+    },
+    {
       name: "Id",
       selector: (row) => row.productId,
       sortable: true,
