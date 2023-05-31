@@ -16,6 +16,8 @@ export default function ProductEdit() {
     const lagerRef = useRef(null);
     const priceRef = useRef(null);
 
+    const [selectedImage, setSelectedImage] = useState(null);
+
     useEffect(() => {
         const fetchData = async () => {
             const brands = await brandService.getAll();
@@ -55,14 +57,16 @@ export default function ProductEdit() {
             return;
         }   
 
-        productService.update(id, {
-            name,
-            description,
-            price,
-            lager,
-            category,
-            brand
-        })
+        const formData = new FormData();
+        formData.append('image', selectedImage);
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('price', price);
+        formData.append('lager', lager);
+        formData.append('brandId', brand.brandId);
+        formData.append('categoryId', category.categoryId);
+
+        productService.update(id, formData)
         .then(data => {
             console.log("Successfully updated")
             setError(false);
@@ -73,6 +77,10 @@ export default function ProductEdit() {
             alert(err);
         })
     }
+
+    const handleImageChange = (event) => {
+        setSelectedImage(event.target.files[0]);
+    };
 
     return (
         <>
@@ -116,6 +124,11 @@ export default function ProductEdit() {
                                 <option key={idx} value={b.brandId}>{b.brandName}</option>
                             ))}
                         </select>
+                    </div>
+
+                    <div className="form-group mt-2">
+                        <label>New image</label>
+                        <input type="file" onChange={handleImageChange} />
                     </div>
                    
                     <div className="form-group mt-2">

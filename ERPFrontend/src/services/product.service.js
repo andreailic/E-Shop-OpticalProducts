@@ -13,13 +13,18 @@ class ProductService {
     return http.post("/product/product", data, {
        headers: {
         'Content-Type': 'multipart/form-data',
-        'X-HED': 'KR'
       }
     });
   }
 
   update(id, data) {
-    return http.put(`/product/product/${id}`, data);
+    return http.put(`/product/product/${id}`, data,
+    {
+      headers: {
+       'Content-Type': 'multipart/form-data',
+     }
+    }
+     );
   }
 
   delete(id) {

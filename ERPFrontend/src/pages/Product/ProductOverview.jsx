@@ -68,6 +68,11 @@ const ProductOverview = () => {
     <div className="container">
       <h2 className="mb-4">Product Overview</h2>
       <div className="row">
+        <div className="col-md-6 m-auto">
+          <img src={"http://localhost:8083/uploads/" + product?.image} alt="product" className="img-fluid" />
+        </div>
+      </div>
+      <div className="row">
         <div className="col-md-6">
           <strong>Product ID:</strong> {product?.productId}
         </div>

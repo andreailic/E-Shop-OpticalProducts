@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -105,15 +106,54 @@ public class ProductController {
 		}
 	  
 	  @PutMapping("/product/{id}")
-		public ResponseEntity<Product> updateProduct(@PathVariable("id") int id, @RequestBody Product newProduct) {		
+		public ResponseEntity<Product> updateProduct(@PathVariable("id") int id,
+													 @RequestParam(value = "image", required = false) MultipartFile image,
+													 @RequestParam String name,
+													 @RequestParam String  description,
+													 @RequestParam Integer price,
+													 @RequestParam Integer lager,
+													 @RequestParam Integer categoryId,
+													 @RequestParam Integer brandId) throws IOException {
+
 		  Product product = productRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Ne postoji proizvod sa id: " + id));
-			product.setName(newProduct.getName());
-			product.setPrice(newProduct.getPrice());
-			product.setDescription(newProduct.getDescription());
-			product.setLager(newProduct.getLager());
-			product.setBrand(newProduct.getBrand());
-			product.setCategory(newProduct.getCategory());
+			product.setName(name);
+			product.setPrice(price);
+			product.setDescription(description);
+			product.setLager(lager);
+
+		  Category category = new Category();
+		  category.setCategoryId(categoryId);
+		  Brand brand = new Brand();
+		  brand.setBrandId(brandId);
+
+			product.setBrand(brand);
+			product.setCategory(category);
+
+			if (image != null && !image.isEmpty()) {
+				// Get the absolute path to the upload directory
+				String uploadPath = System.getProperty("user.dir") + "/" + "src/main/resources/static/uploads/";
+
+				// Create the upload directory if it doesn't exist
+				File directory = new File(uploadPath);
+				if (!directory.exists()) {
+					directory.mkdirs();
+				}
+
+				// Save the image file in the upload directory
+				String fileName;
+				if (product.getImage() != null && !Objects.equals(product.getImage(), "")) {
+					fileName = product.getImage();
+				} else {
+					fileName = StringUtils.cleanPath(UUID.randomUUID().toString() + "_" + image.getOriginalFilename());
+				}
+				Path filePath = Paths.get(uploadPath + fileName);
+				Files.copy(image.getInputStream(),
+						filePath, StandardCopyOption.REPLACE_EXISTING);
+
+				product.setImage(fileName);
+
+			}
 			Product updatedProduct = productRepository.save(product);
 			
 			return ResponseEntity.ok(updatedProduct);
