@@ -56,7 +56,7 @@ function App() {
         <Route path="/product" exact element={<ProductList />} />
 
         <Route path="/review/edit/:id" exact element={<ReviewEdit />} />  
-        <Route path="/review/add" exact element={<ReviewAdd />} />
+        <Route path="/review/add/:id" exact element={<ReviewAdd />} />
         <Route path="/review" exact element={<ReviewList />} />
 
         <Route path="/customer/edit/:id" exact element={<CustomerEdit />} />  

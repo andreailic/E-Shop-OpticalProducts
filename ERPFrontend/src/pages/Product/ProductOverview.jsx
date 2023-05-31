@@ -105,7 +105,7 @@ const ProductOverview = () => {
       <div className="row">
 
       {userRole && <div>
-            <Link to="/review/add" className="btn btn-success m-5">New review</Link>
+            <Link to={"/review/add/" + id} className="btn btn-success m-5">New review</Link>
         </div>}
         
       <DataTable

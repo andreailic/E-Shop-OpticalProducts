@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react"
 import productService from "../../services/product.service";
 import reviewService from "../../services/review.service";
+import { useParams } from "react-router-dom";
 
 export default function ReviewAdd() {
+
+    const {id} = useParams();
 
     const [products, setProducts] = useState([]);
 
@@ -16,6 +19,7 @@ export default function ReviewAdd() {
         const fetchData = async () => {
             const productsData = await productService.getAll();
             setProducts(productsData.data);
+            productRef.current = products.find(x => x.productId === +id);
         }
 
         fetchData();
@@ -25,7 +29,7 @@ export default function ReviewAdd() {
         
         const comment = commentRef.current.value;
         const rating = ratingRef.current.value;
-        const product = products.find(x => x.productId === +productRef.current.value);
+        const product = products.find(x => x.productId === +productRef.current.productId);
         
         if (!comment || !rating || !product) {
             setError(true);
@@ -64,7 +68,7 @@ export default function ReviewAdd() {
                 <form>
                         <div className="form-group mt-2">
                             <label>Product</label>
-                            <select ref={productRef} className="form-control">
+                            <select ref={productRef} className="form-control" disabled>
                                 {products.map((p, idx) => (
                                     <option key={idx} value={p.productId}>{p.name}</option>
                                 ))}
