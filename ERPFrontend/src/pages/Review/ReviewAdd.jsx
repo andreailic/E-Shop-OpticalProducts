@@ -64,7 +64,11 @@ export default function ReviewAdd() {
         <>
             <h1>New review</h1>
 
+            <div className="text-left m-5"style={{ marginLeft: "-700px" }}>
+                <img src='/rating.png' alt='login' width={130} height={130} />
+            </div>
             <div className="w-50 m-auto">
+
                 <form>
                         <div className="form-group mt-2">
                             <label>Product</label>
@@ -74,7 +78,7 @@ export default function ReviewAdd() {
                                 ))}
                             </select>
                         </div>
-
+                      
                         <div className="form-group mt-2">
                             <label>Rating</label>
                             <input type="number" ref={ratingRef} min={0} max={5} className="form-control" name="price" />

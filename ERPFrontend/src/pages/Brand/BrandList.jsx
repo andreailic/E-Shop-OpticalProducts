@@ -32,6 +32,8 @@ export default function BrandList() {
             allowOverflow: true,
             button: true,
         },
+
+          
       ];
 
     // States
