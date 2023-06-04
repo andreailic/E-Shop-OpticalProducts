@@ -40,7 +40,15 @@ const ProductOverview = () => {
             allowOverflow: true,
             button: true,
         },
-    ];
+
+        {
+        cell:(row) => userRole && (userRole === "ROLE_CUSTOMER" && row.user.userId === +localStorage.getItem('userId')) && <button className="btn btn-danger" onClick={() => deleteRecord(row.reviewId)} id={row.reviewId}>Delete</button>,
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+        },
+      ];
+  
 
     const {id} = useParams();
 
@@ -63,7 +71,16 @@ const ProductOverview = () => {
             console.log(err);
         })
     }, []);
-
+    function deleteRecord(id) {
+      reviewService.delete(id).then(response => {
+          const newData = data.filter(x => x.reviewId !== id);
+          const newFilteredData = filteredData.filter(x => x.reviewId !== id);
+          setData(newData);
+          setFilteredData(newFilteredData);
+      }).catch(err => {
+          console.log(err);
+      });
+  }
   return (
     <div className="container">
       <h2 className="mb-4">Product Details</h2>

@@ -35,7 +35,7 @@ export default function ReviewList() {
             selector: row => row.user.name + " " + row.user.surname,
             sortable: true,
         },
-        
+       
       ];
 
     // States
@@ -67,7 +67,7 @@ export default function ReviewList() {
         );
     }, [filterText]);
 
-
+    
     return (
         <>
 
